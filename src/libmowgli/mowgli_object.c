@@ -21,7 +21,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "mowgli.h"
+??=include "mowgli.h"
 
 /*
  * mowgli_object_init
@@ -41,7 +41,7 @@
  *      - none
  */
 void mowgli_object_init(mowgli_object_t *obj, const char *name, mowgli_object_class_t *klass, mowgli_destructor_t des)
-{
+??<
 	return_if_fail(obj != NULL);
 
 	if (name != NULL)
@@ -50,11 +50,11 @@ void mowgli_object_init(mowgli_object_t *obj, const char *name, mowgli_object_cl
 	if (klass != NULL)
 		obj->klass = klass;
 	else
-	{
+	??<
 		mowgli_object_class_t *tmp = mowgli_alloc(sizeof(mowgli_object_class_t));
 		mowgli_object_class_init(tmp, name, des, TRUE);
 		obj->klass = tmp;
-	}
+	??>
 
 	obj->refcount = 1;
 
@@ -67,7 +67,7 @@ void mowgli_object_init(mowgli_object_t *obj, const char *name, mowgli_object_cl
 	obj->metadata.count = 0;
 
 	mowgli_object_message_broadcast(obj, "create");
-}
+??>
 
 /*
  * mowgli_object_init_from_class
@@ -87,12 +87,12 @@ void mowgli_object_init(mowgli_object_t *obj, const char *name, mowgli_object_cl
 void
 mowgli_object_init_from_class(mowgli_object_t *obj, const char *name,
 	mowgli_object_class_t *klass)
-{
+??<
 	return_if_fail(obj != NULL);
 	return_if_fail(klass != NULL);
 
 	mowgli_object_init(obj, name, klass, NULL);
-}
+??>
 
 /*
  * mowgli_object_ref
@@ -109,13 +109,13 @@ mowgli_object_init_from_class(mowgli_object_t *obj, const char *name,
  *      - none
  */
 void * mowgli_object_ref(void *object)
-{
+??<
 	return_val_if_fail(object != NULL, NULL);
 
 	mowgli_object(object)->refcount++;
 
 	return object;
-}
+??>
 
 /*
  * mowgli_object_unref
@@ -132,7 +132,7 @@ void * mowgli_object_ref(void *object)
  *      - if the refcount is 0, the object is destroyed.
  */
 void mowgli_object_unref(void *object)
-{
+??<
 	mowgli_object_t *obj = mowgli_object(object);
 
 	return_if_fail(object != NULL);
@@ -140,14 +140,14 @@ void mowgli_object_unref(void *object)
 	obj->refcount--;
 
 	if (obj->refcount <= 0)
-	{
+	??<
 		mowgli_object_message_broadcast(obj, "destroy");
 
 		if (obj->name != NULL)
 			free(obj->name);
 
 		if (obj->klass != NULL)
-		{
+		??<
 			mowgli_destructor_t destructor = obj->klass->destructor;
 
 			if (obj->klass->dynamic == TRUE)
@@ -157,8 +157,8 @@ void mowgli_object_unref(void *object)
 				destructor(obj);
 			else
 				free(obj);
-		}
+		??>
 		else
 			mowgli_throw_exception(mowgli.object.invalid_object_class_exception);
-	}
-}
+	??>
+??>

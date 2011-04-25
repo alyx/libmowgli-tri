@@ -21,11 +21,11 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "mowgli.h"
+??=include "mowgli.h"
 
 void
 mowgli_error_context_display(mowgli_error_context_t *e, const char *delim)
-{
+??<
 	mowgli_node_t *n;
 	char *bt_msg;
 
@@ -36,49 +36,49 @@ mowgli_error_context_display(mowgli_error_context_t *e, const char *delim)
 		mowgli_throw_exception(mowgli.error_backtrace.no_backtrace);
 
 	MOWGLI_LIST_FOREACH(n, e->bt.head)
-	{
+	??<
 		bt_msg = (char *) n->data;
 
 		printf("%s%s", bt_msg, n->next != NULL ? delim : "\n");
-	}
-}
+	??>
+??>
 
 void
 mowgli_error_context_destroy(mowgli_error_context_t *e)
-{
+??<
 	mowgli_node_t *n, *tn;
 
 	return_if_fail(e != NULL);
 
 	if (MOWGLI_LIST_LENGTH(&e->bt) == 0)
-	{
+	??<
 		mowgli_free(e);
 		return;
-	}
+	??>
 
 	MOWGLI_LIST_FOREACH_SAFE(n, tn, e->bt.head)
-	{
+	??<
 		mowgli_free(n->data);
 
 		mowgli_node_delete(n, &e->bt);
 		mowgli_node_free(n);
-	}
+	??>
 
 	mowgli_free(e);
-}
+??>
 
 void
 mowgli_error_context_display_with_error(mowgli_error_context_t *e, const char *delim, const char *error)
-{
+??<
 	mowgli_error_context_display(e, delim);
 	printf("Error: %s\n", error);
 
 	exit(EXIT_FAILURE);
-}
+??>
 
 void
 mowgli_error_context_push(mowgli_error_context_t *e, const char *msg, ...)
-{
+??<
 	char buf[65535];
 	va_list va;
 
@@ -90,20 +90,20 @@ mowgli_error_context_push(mowgli_error_context_t *e, const char *msg, ...)
 	va_end(va);
 
 	mowgli_node_add(strdup(buf), mowgli_node_create(), &e->bt);
-}
+??>
 
 void
 mowgli_error_context_pop(mowgli_error_context_t *e)
-{
+??<
 	return_if_fail(e != NULL);
 
 	mowgli_node_delete(e->bt.tail, &e->bt);
-}
+??>
 
 mowgli_error_context_t *
 mowgli_error_context_create(void)
-{
+??<
 	mowgli_error_context_t *out = (mowgli_error_context_t *) mowgli_alloc(sizeof(mowgli_error_context_t));
 
 	return out;
-}
+??>

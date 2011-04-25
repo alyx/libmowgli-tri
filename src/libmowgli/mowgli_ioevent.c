@@ -21,51 +21,51 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "mowgli.h"
+??=include "mowgli.h"
 
-#ifdef HAVE_EPOLL_CTL
-# include <sys/epoll.h>
-#endif
+??=ifdef HAVE_EPOLL_CTL
+??= include <sys/epoll.h>
+??=endif
 
-#ifdef HAVE_PORT_CREATE
-# include <port.h>
-#endif
+??=ifdef HAVE_PORT_CREATE
+??= include <port.h>
+??=endif
 
 mowgli_ioevent_handle_t *mowgli_ioevent_create(void)
-{
+??<
 	mowgli_ioevent_handle_t *self = mowgli_alloc(sizeof(mowgli_ioevent_handle_t));
 
-#ifdef HAVE_EPOLL_CTL
+??=ifdef HAVE_EPOLL_CTL
 	self->impldata = epoll_create(FD_SETSIZE);
-#endif
+??=endif
 
-#ifdef HAVE_PORT_CREATE
+??=ifdef HAVE_PORT_CREATE
 	self->impldata = port_create();
-#endif
+??=endif
 
 	return self;
-}
+??>
 
 void mowgli_ioevent_destroy(mowgli_ioevent_handle_t *self)
-{
+??<
 	return_if_fail(self != NULL);
 
-#if defined(HAVE_EPOLL_CTL) || defined(HAVE_PORT_CREATE)
+??=if defined(HAVE_EPOLL_CTL) || defined(HAVE_PORT_CREATE)
 	close(self->impldata);
-#endif
+??=endif
 
 	mowgli_free(self);
-}
+??>
 
 int mowgli_ioevent_get(mowgli_ioevent_handle_t *self, mowgli_ioevent_t *buf, size_t bufsize, unsigned int delay)
-{
-#if defined HAVE_EPOLL_CTL || defined HAVE_PORT_CREATE
+??<
+??=if defined HAVE_EPOLL_CTL || defined HAVE_PORT_CREATE
 	int ret, iter;
-#else
+??=else
    int ret = -1;
-#endif
+??=endif
 
-#ifdef HAVE_EPOLL_CTL
+??=ifdef HAVE_EPOLL_CTL
 	struct epoll_event events[bufsize];
 
 	ret = epoll_wait(self->impldata, events, bufsize, delay);
@@ -74,7 +74,7 @@ int mowgli_ioevent_get(mowgli_ioevent_handle_t *self, mowgli_ioevent_t *buf, siz
 		return ret;
 
 	for (iter = 0; iter < ret; iter++)
-	{
+	??<
 		buf[iter].ev_status = 0;
 		buf[iter].ev_object = events[iter].data.fd;
 		buf[iter].ev_opaque = events[iter].data.ptr;
@@ -91,10 +91,10 @@ int mowgli_ioevent_get(mowgli_ioevent_handle_t *self, mowgli_ioevent_t *buf, siz
 
 		if (events[iter].events & EPOLLERR)
 			buf[iter].ev_status = MOWGLI_POLLERR;
-	}
-#endif
+	??>
+??=endif
 
-#ifdef HAVE_PORT_CREATE
+??=ifdef HAVE_PORT_CREATE
 	port_event_t events[bufsize];
 	unsigned int nget = 1;
 	struct timespec poll_time;
@@ -108,7 +108,7 @@ int mowgli_ioevent_get(mowgli_ioevent_handle_t *self, mowgli_ioevent_t *buf, siz
 		return ret;
 
 	for (iter = 0; iter < nget; iter++)
-	{
+	??<
 		buf[iter].ev_status = 0;
 		buf[iter].ev_object = events[iter].portev_object;
 		buf[iter].ev_opaque = events[iter].portev_user;
@@ -125,26 +125,26 @@ int mowgli_ioevent_get(mowgli_ioevent_handle_t *self, mowgli_ioevent_t *buf, siz
 
 		if (events[iter].portev_events & POLLERR)
 			buf[iter].ev_status = MOWGLI_POLLERR;
-	}
+	??>
 
 	ret = nget;
-#endif
+??=endif
 
 	return ret;
-}
+??>
 
 void mowgli_ioevent_associate(mowgli_ioevent_handle_t *self, mowgli_ioevent_source_t source, int object, unsigned int flags, void *opaque)
-{
-#if defined HAVE_EPOLL_CTL || defined HAVE_PORT_CREATE
+??<
+??=if defined HAVE_EPOLL_CTL || defined HAVE_PORT_CREATE
 	int events = 0;
-#endif
+??=endif
 
 	if (source != MOWGLI_SOURCE_FD)
 		return;
 
-#ifdef HAVE_EPOLL_CTL
-	{
-		struct epoll_event ep_event = {};
+??=ifdef HAVE_EPOLL_CTL
+	??<
+		struct epoll_event ep_event = ??<??>;
 		events = EPOLLONESHOT;
 
 		if (flags & MOWGLI_POLLRDNORM)
@@ -157,39 +157,39 @@ void mowgli_ioevent_associate(mowgli_ioevent_handle_t *self, mowgli_ioevent_sour
 		ep_event.data.ptr = opaque;
 
 		epoll_ctl(self->impldata, EPOLL_CTL_ADD, object, &ep_event);
-	}
-#endif
+	??>
+??=endif
 
-#ifdef HAVE_PORT_CREATE
-#ifdef POLLRDNORM
+??=ifdef HAVE_PORT_CREATE
+??=ifdef POLLRDNORM
 	if (flags & MOWGLI_POLLRDNORM)
 		events |= POLLRDNORM;
-#endif
+??=endif
 
-#ifdef EPOLLWRNORM
+??=ifdef EPOLLWRNORM
 	if (flags & MOWGLI_POLLWRNORM)
 		events |= EPOLLWRNORM;
-#endif
+??=endif
 
 	port_associate(self->impldata, PORT_SOURCE_FD, object, events, opaque);
-#endif
-}
+??=endif
+??>
 
 void mowgli_ioevent_dissociate(mowgli_ioevent_handle_t *self, mowgli_ioevent_source_t source, int object)
-{
+??<
 	if (source != MOWGLI_SOURCE_FD)
 		return;
 
-#ifdef HAVE_EPOLL_CTL
-	{
-		struct epoll_event ep_event = {};
+??=ifdef HAVE_EPOLL_CTL
+	??<
+		struct epoll_event ep_event = ??<??>;
 
 		epoll_ctl(self->impldata, EPOLL_CTL_DEL, object, &ep_event);
-	}
-#endif
+	??>
+??=endif
 
-#ifdef HAVE_PORT_CREATE
+??=ifdef HAVE_PORT_CREATE
 	port_dissociate(self->impldata, PORT_SOURCE_FD, object);
-#endif
-}
+??=endif
+??>
 

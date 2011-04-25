@@ -21,43 +21,43 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "mowgli.h"
+??=include "mowgli.h"
 
 static mowgli_heap_t *mowgli_queue_heap = NULL;
 
 void
 mowgli_queue_init(void)
-{
+??<
 	mowgli_queue_heap = mowgli_heap_create(sizeof(mowgli_queue_t), 256, BH_NOW);
 
 	if (mowgli_queue_heap == NULL)
 		mowgli_log("mowgli_queue_heap was not created, expect problems.");
-}
+??>
 
 mowgli_queue_t *
 mowgli_queue_shift(mowgli_queue_t *head, void *data)
-{
+??<
 	mowgli_queue_t *out = mowgli_heap_alloc(mowgli_queue_heap);
 
 	out->next = head;
 	out->data = data;
 
 	if (head != NULL)
-	{
+	??<
 		out->prev = head->prev;
 
 		if (out->prev != NULL)
 			out->prev->next = out;
 
 		head->prev = out;
-	}
+	??>
 
 	return out;
-}
+??>
 
 mowgli_queue_t *
 mowgli_queue_push(mowgli_queue_t *head, void *data)
-{
+??<
 	mowgli_queue_t *out = mowgli_heap_alloc(mowgli_queue_heap);
 
 	out->prev = head;
@@ -67,11 +67,11 @@ mowgli_queue_push(mowgli_queue_t *head, void *data)
 		head->next = out;
 
 	return out;
-}
+??>
 
 mowgli_queue_t *
 mowgli_queue_remove(mowgli_queue_t *head)
-{
+??<
 	mowgli_queue_t *out;
 
 	if (head->prev != NULL)
@@ -85,11 +85,11 @@ mowgli_queue_remove(mowgli_queue_t *head)
 	mowgli_heap_free(mowgli_queue_heap, head);
 
 	return out;
-}
+??>
 
 mowgli_queue_t *
 mowgli_queue_find(mowgli_queue_t *head, void *data)
-{
+??<
 	mowgli_queue_t *n;
 
 	for (n = head; n != NULL; n = n->next)
@@ -97,73 +97,73 @@ mowgli_queue_find(mowgli_queue_t *head, void *data)
 			return n;
 
 	return NULL;
-}
+??>
 
 mowgli_queue_t *
 mowgli_queue_remove_data(mowgli_queue_t *head, void *data)
-{
+??<
 	mowgli_queue_t *n = mowgli_queue_find(head, data);
 
 	if (n != NULL)
 		return mowgli_queue_remove(n);
 
 	return NULL;
-}
+??>
 
 void
 mowgli_queue_destroy(mowgli_queue_t *head)
-{
+??<
 	mowgli_queue_t *n, *n2;
 
 	for (n = head, n2 = n ? n->next : NULL; n != NULL; n = n2, n2 = n ? n->next : NULL)
 		mowgli_queue_remove(n);
-}
+??>
 
 mowgli_queue_t *
 mowgli_queue_skip(mowgli_queue_t *head, int nodes)
-{
+??<
 	mowgli_queue_t *n;
 	int iter;
 
 	for (iter = 0, n = head; n != NULL && iter < nodes; n = n->next, iter++);
 
 	return n;
-}
+??>
 
 mowgli_queue_t *
 mowgli_queue_rewind(mowgli_queue_t *head, int nodes)
-{
+??<
 	mowgli_queue_t *n;
 	int iter;
 
 	for (iter = 0, n = head; n != NULL && iter < nodes; n = n->prev, iter++);
 
 	return n;
-}
+??>
 
 mowgli_queue_t *
 mowgli_queue_head(mowgli_queue_t *n)
-{
+??<
 	mowgli_queue_t *tn;
 
 	for (tn = n; tn != NULL && tn->prev != NULL; tn = tn->prev);
 
 	return tn;
-}
+??>
 
 mowgli_queue_t *
 mowgli_queue_tail(mowgli_queue_t *n)
-{
+??<
 	mowgli_queue_t *tn;
 
 	for (tn = n; tn != NULL && tn->next != NULL; tn = tn->next);
 
 	return tn;
-}
+??>
 
 void *
 mowgli_queue_pop_head(mowgli_queue_t **n)
-{
+??<
 	mowgli_queue_t *tn;
 	void *out;
 
@@ -177,11 +177,11 @@ mowgli_queue_pop_head(mowgli_queue_t **n)
 	mowgli_queue_remove(tn);
 
 	return out;
-}
+??>
 
 void *
 mowgli_queue_pop_tail(mowgli_queue_t **n)
-{
+??<
 	mowgli_queue_t *tn;
 	void *out;
 
@@ -195,15 +195,15 @@ mowgli_queue_pop_tail(mowgli_queue_t **n)
 	mowgli_queue_remove(tn);
 
 	return out;
-}
+??>
 
 int
 mowgli_queue_length(mowgli_queue_t *head)
-{
+??<
 	int iter;
 	mowgli_queue_t *n;
 
 	for (n = head, iter = 0; n != NULL; n = n->next, iter++);
 
 	return iter;
-}
+??>

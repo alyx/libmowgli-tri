@@ -21,16 +21,16 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MOWGLI_OBJECT_METADATA_H__
-#define __MOWGLI_OBJECT_METADATA_H__
+??=ifndef __MOWGLI_OBJECT_METADATA_H__
+??=define __MOWGLI_OBJECT_METADATA_H__
 
-typedef struct {
+typedef struct ??<
 	char *name;
 	void *data;
-} mowgli_object_metadata_entry_t;
+??> mowgli_object_metadata_entry_t;
 
 extern void mowgli_object_metadata_associate(mowgli_object_t *self, const char *key, void *value);
 extern void mowgli_object_metadata_dissociate(mowgli_object_t *self, const char *key);
 extern void *mowgli_object_metadata_retrieve(mowgli_object_t *self, const char *key);
 
-#endif
+??=endif

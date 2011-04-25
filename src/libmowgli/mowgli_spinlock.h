@@ -21,19 +21,19 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MOWGLI_SPINLOCK_H__
-#define __MOWGLI_SPINLOCK_H__
+??=ifndef __MOWGLI_SPINLOCK_H__
+??=define __MOWGLI_SPINLOCK_H__
 
-typedef struct {
+typedef struct ??<
 	void *read_owner;	/* opaque data representing a spinlock's owner */
 	void *write_owner;	/* opaque data representing a spinlock's owner */
-} mowgli_spinlock_t;
+??> mowgli_spinlock_t;
 
-typedef enum {
+typedef enum ??<
 	MOWGLI_SPINLOCK_READ,
 	MOWGLI_SPINLOCK_WRITE,
 	MOWGLI_SPINLOCK_READWRITE
-} mowgli_spinlock_lock_param_t;
+??> mowgli_spinlock_lock_param_t;
 
 extern mowgli_spinlock_t *mowgli_spinlock_create(void);
 extern void mowgli_spinlock_lock(mowgli_spinlock_t *self, void *r, void *w);
@@ -41,4 +41,4 @@ extern void mowgli_spinlock_unlock(mowgli_spinlock_t *self, void *r, void *w);
 extern void mowgli_spinlock_wait(mowgli_spinlock_t *self, mowgli_spinlock_lock_param_t param);
 extern void mowgli_spinlock_timed_wait(mowgli_spinlock_t *self, mowgli_spinlock_lock_param_t param, struct timeval *tv);
 
-#endif
+??=endif

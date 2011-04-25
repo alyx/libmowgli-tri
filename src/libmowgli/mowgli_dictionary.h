@@ -22,8 +22,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MOWGLI_DICTIONARY_H__
-#define __MOWGLI_DICTIONARY_H__
+??=ifndef __MOWGLI_DICTIONARY_H__
+??=define __MOWGLI_DICTIONARY_H__
 
 struct mowgli_dictionary_; /* defined in src/dictionary.c */
 
@@ -34,29 +34,29 @@ typedef struct mowgli_dictionary_elem_ mowgli_dictionary_elem_t;
 typedef int (*mowgli_dictionary_comparator_func_t)(const char *a, const char *b);
 
 struct mowgli_dictionary_elem_
-{
+??<
 	mowgli_dictionary_elem_t *left, *right, *prev, *next;
 	void *data;
 	char *key;
 	int position;
-};
+??>;
 
 /*
  * mowgli_dictionary_iteration_state_t, private.
  */
 struct mowgli_dictionary_iteration_state_
-{
+??<
 	mowgli_dictionary_elem_t *cur, *next;
 	void *pspare[4];
 	int ispare[4];
-};
+??>;
 
 typedef struct mowgli_dictionary_iteration_state_ mowgli_dictionary_iteration_state_t;
 
 /*
  * this is a convenience macro for inlining iteration of dictionaries.
  */
-#define MOWGLI_DICTIONARY_FOREACH(element, state, dict) for (mowgli_dictionary_foreach_start((dict), (state)); (element = mowgli_dictionary_foreach_cur((dict), (state))); mowgli_dictionary_foreach_next((dict), (state)))
+??=define MOWGLI_DICTIONARY_FOREACH(element, state, dict) for (mowgli_dictionary_foreach_start((dict), (state)); (element = mowgli_dictionary_foreach_cur((dict), (state))); mowgli_dictionary_foreach_next((dict), (state)))
 
 /*
  * mowgli_dictionary_create() creates a new dictionary tree.
@@ -163,4 +163,4 @@ extern void *mowgli_dictionary_delete(mowgli_dictionary_t *dtree, const char *ke
 
 void mowgli_dictionary_stats(mowgli_dictionary_t *dict, void (*cb)(const char *line, void *privdata), void *privdata);
 
-#endif
+??=endif

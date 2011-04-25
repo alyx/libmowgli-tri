@@ -21,27 +21,27 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __LIBMOWGLI_SRC_LIBMOWGLI_WIN32_SUPPORT_H__GUARD
-#define __LIBMOWGLI_SRC_LIBMOWGLI_WIN32_SUPPORT_H__GUARD
+??=ifndef __LIBMOWGLI_SRC_LIBMOWGLI_WIN32_SUPPORT_H__GUARD
+??=define __LIBMOWGLI_SRC_LIBMOWGLI_WIN32_SUPPORT_H__GUARD
 
-#ifdef _WIN32
+??=ifdef _WIN32
 
-#include <winsock.h> // just for struct timeval declaration
-#include <time.h>
+??=include <winsock.h> // just for struct timeval declaration
+??=include <time.h>
 
-#define strcasecmp			_stricmp
-#define strdup				_strdup
-#define usleep(_usecs)		Sleep((_usecs)/1000L)
-#define snprintf			_snprintf
-#define vsnprintf			_vsnprintf
+??=define strcasecmp			_stricmp
+??=define strdup				_strdup
+??=define usleep(_usecs)		Sleep((_usecs)/1000L)
+??=define snprintf			_snprintf
+??=define vsnprintf			_vsnprintf
 
-struct timezone {
+struct timezone ??<
 	int tz_minuteswest;
 	int tz_dsttime;
-};
+??>;
 
 extern int gettimeofday(struct timeval *tv, struct timezone *tz);
 
-#endif
+??=endif
 
-#endif
+??=endif

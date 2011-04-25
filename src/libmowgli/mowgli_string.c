@@ -22,10 +22,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "mowgli.h"
+??=include "mowgli.h"
 
 mowgli_string_t *mowgli_string_create(void)
-{
+??<
 	mowgli_string_t *self = mowgli_alloc(sizeof(mowgli_string_t));
 
 	self->size = 64;
@@ -38,50 +38,50 @@ mowgli_string_t *mowgli_string_create(void)
 	self->destroy = &mowgli_string_destroy;
 
 	return self;
-}
+??>
 
 void mowgli_string_reset(mowgli_string_t *self)
-{
+??<
 	return_if_fail(self != NULL);
 
 	self->str[0] = self->pos = 0;
-}
+??>
 
 void mowgli_string_destroy(mowgli_string_t *self)
-{
+??<
 	return_if_fail(self != NULL);
 
 	mowgli_free(self->str);
 	mowgli_free(self);
-}
+??>
 
 void mowgli_string_append(mowgli_string_t *self, const char *src, size_t n)
-{
+??<
 	if (self->size - self->pos <= n)
-	{
+	??<
 		char *new;
 
 		self->size = MAX(self->size * 2, self->pos + n + 8);
 		new = realloc(self->str, self->size);
 		self->str = new;
-	}
+	??>
 
 	memcpy(self->str + self->pos, src, n);
 	self->pos += n;
 	self->str[self->pos] = 0;
-}
+??>
 
 void mowgli_string_append_char(mowgli_string_t *self, const char c)
-{
+??<
 	if (self->size - self->pos <= 1)
-	{
+	??<
 		char *new;
 
 		self->size = MAX(self->size * 2, self->pos + 9);
 		new = realloc(self->str, self->size);
 		self->str = new;
-	}
+	??>
 
 	self->str[self->pos++] = c;
 	self->str[self->pos] = 0;
-}
+??>

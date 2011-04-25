@@ -21,10 +21,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "mowgli.h"
+??=include "mowgli.h"
 
 void mowgli_init(void)
-{
+??<
 	static int mowgli_initted_ = 0;
 
 	if (mowgli_initted_)
@@ -46,4 +46,4 @@ void mowgli_init(void)
 	mowgli_allocator_set_policy(mowgli_allocator_malloc);
 
 	mowgli_initted_++;
-}
+??>

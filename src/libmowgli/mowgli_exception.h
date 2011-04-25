@@ -21,17 +21,17 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MOWGLI_EXCEPTION_H__
-#define __MOWGLI_EXCEPTION_H__
+??=ifndef __MOWGLI_EXCEPTION_H__
+??=define __MOWGLI_EXCEPTION_H__
 
-#define mowgli_throw_exception(x) do { mowgli_log("exception %s thrown", #x); return; } while(0)
+??=define mowgli_throw_exception(x) do ??< mowgli_log("exception %s thrown", ??=x); return; ??> while(0)
 
-#define mowgli_throw_exception_val(x, y) do { mowgli_log("exception %s thrown", #x); return (y); } while(0)
+??=define mowgli_throw_exception_val(x, y) do ??< mowgli_log("exception %s thrown", ??=x); return (y); ??> while(0)
 
-#define mowgli_throw_exception_fatal(x) \
-	do { \
-		mowgli_log("exception %s thrown", #x); \
+??=define mowgli_throw_exception_fatal(x) \
+	do ??< \
+		mowgli_log("exception %s thrown", ??=x); \
 		exit(EXIT_FAILURE); \
-	} while (0)
+	??> while (0)
 
-#endif
+??=endif

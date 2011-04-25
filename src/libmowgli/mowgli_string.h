@@ -22,10 +22,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MOWGLI_STRING_H__
-#define __MOWGLI_STRING_H__
+??=ifndef __MOWGLI_STRING_H__
+??=define __MOWGLI_STRING_H__
 
-typedef struct mowgli_string_ {
+typedef struct mowgli_string_ ??<
 	char *str;
 	size_t pos;
 	size_t size;
@@ -34,7 +34,7 @@ typedef struct mowgli_string_ {
 	void (*append)(struct mowgli_string_ *self, const char *src, size_t n);
 	void (*append_char)(struct mowgli_string_ *self, const char c);
 	void (*destroy)(struct mowgli_string_ *self);
-} mowgli_string_t;
+??> mowgli_string_t;
 
 extern mowgli_string_t *mowgli_string_create(void);
 extern void mowgli_string_reset(mowgli_string_t *self);
@@ -42,4 +42,4 @@ extern void mowgli_string_destroy(mowgli_string_t *self);
 extern void mowgli_string_append(mowgli_string_t *self, const char *src, size_t n);
 extern void mowgli_string_append_char(mowgli_string_t *self, const char c);
 
-#endif
+??=endif

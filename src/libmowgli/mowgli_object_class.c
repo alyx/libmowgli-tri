@@ -22,21 +22,21 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "mowgli.h"
+??=include "mowgli.h"
 
 static mowgli_patricia_t *mowgli_object_class_dict = NULL;
 
 static void _object_key_canon(char *str)
-{
+??<
 	while (*str)
-	{
+	??<
 		*str = toupper(*str);
 		str++;
-	}
-}
+	??>
+??>
 
 void mowgli_object_class_init(mowgli_object_class_t *klass, const char *name, mowgli_destructor_t des, mowgli_boolean_t dynamic)
-{
+??<
 	/* if the object_class dictionary has not yet been initialized, we will want to do that. */
 	if (mowgli_object_class_dict == NULL)
 		mowgli_object_class_dict = mowgli_patricia_create(_object_key_canon);
@@ -63,36 +63,36 @@ void mowgli_object_class_init(mowgli_object_class_t *klass, const char *name, mo
 
 	/* add to the object_class index */
 	mowgli_patricia_add(mowgli_object_class_dict, klass->name, klass);
-}
+??>
 
 int mowgli_object_class_check_cast(mowgli_object_class_t *klass1, mowgli_object_class_t *klass2)
-{
+??<
 	mowgli_node_t *n;
 
 	if (klass1 == NULL || klass2 == NULL)
 		mowgli_throw_exception_val(mowgli.object_class.invalid_object_class_exception, 0);
 
 	MOWGLI_LIST_FOREACH(n, klass1->derivitives.head)
-	{
+	??<
 		mowgli_object_class_t *tklass = (mowgli_object_class_t *) n->data;
 
 		if (tklass == klass2)
 			return 1;
-	}
+	??>
 
 	return 0;
-}
+??>
 
 void mowgli_object_class_set_derivitive(mowgli_object_class_t *klass, mowgli_object_class_t *parent)
-{
+??<
 	if (klass == NULL || parent == NULL)
 		mowgli_throw_exception_fatal(mowgli.object_class.invalid_object_class_exception);
 
 	mowgli_node_add(klass, mowgli_node_create(), &parent->derivitives);
-}
+??>
 
 void *mowgli_object_class_reinterpret_impl(/* mowgli_object_t */ void *opdata, mowgli_object_class_t *klass)
-{
+??<
 	mowgli_object_t *object = mowgli_object(opdata);
 
 	/* this can possibly happen at runtime .. lets not make it a fatal exception. */
@@ -104,15 +104,15 @@ void *mowgli_object_class_reinterpret_impl(/* mowgli_object_t */ void *opdata, m
 
 	mowgli_log("Invalid reinterpreted cast from %s<%p> to %s", object->klass->name, klass->name);
 	return NULL;
-}
+??>
 
 mowgli_object_class_t *mowgli_object_class_find_by_name(const char *name)
-{
+??<
 	return mowgli_patricia_retrieve(mowgli_object_class_dict, name);
-}
+??>
 
 void mowgli_object_class_destroy(mowgli_object_class_t *klass)
-{
+??<
 	mowgli_node_t *n, *tn;
 
 	if (klass == NULL)
@@ -122,11 +122,11 @@ void mowgli_object_class_destroy(mowgli_object_class_t *klass)
 		mowgli_throw_exception_fatal(mowgli.object_class.nondynamic_object_class_exception);
 
 	MOWGLI_LIST_FOREACH_SAFE(n, tn, klass->derivitives.head)
-	{
+	??<
 		mowgli_node_delete(n, &klass->derivitives);
 		mowgli_node_free(n);
-	}
+	??>
 
 	mowgli_free(klass->name);
 	mowgli_free(klass);
-}
+??>

@@ -21,25 +21,25 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MOWGLI_LOGGER_H__
-#define __MOWGLI_LOGGER_H__
+??=ifndef __MOWGLI_LOGGER_H__
+??=define __MOWGLI_LOGGER_H__
 
 typedef void (*mowgli_log_cb_t)(const char *);
 
-#ifdef __GNUC__
-# define mowgli_log(...) mowgli_log_real(__FILE__, __LINE__, __PRETTY_FUNCTION__, __VA_ARGS__)
-#elif defined _MSC_VER
-# if _MSC_VER <= 1200
-   static __inline void mowgli_log(char *fmt, ...) { /* TODO/UNSUPPORTED */ }
-# else
-#  define mowgli_log(...) mowgli_log_real(__FILE__, __LINE__, __FUNCTION__, __VA_ARGS__)
-# endif
-#else
-# define mowgli_log(...) mowgli_log_real(__FILE__, __LINE__, __func__, __VA_ARGS__)
-#endif
+??=ifdef __GNUC__
+??= define mowgli_log(...) mowgli_log_real(__FILE__, __LINE__, __PRETTY_FUNCTION__, __VA_ARGS__)
+??=elif defined _MSC_VER
+??= if _MSC_VER <= 1200
+   static __inline void mowgli_log(char *fmt, ...) ??< /* TODO/UNSUPPORTED */ ??>
+??= else
+??=  define mowgli_log(...) mowgli_log_real(__FILE__, __LINE__, __FUNCTION__, __VA_ARGS__)
+??= endif
+??=else
+??= define mowgli_log(...) mowgli_log_real(__FILE__, __LINE__, __func__, __VA_ARGS__)
+??=endif
 
 extern void mowgli_log_real(const char *file, int line, const char *func, const char *buf, ...);
 
 extern void mowgli_log_set_cb(mowgli_log_cb_t callback);
 
-#endif
+??=endif

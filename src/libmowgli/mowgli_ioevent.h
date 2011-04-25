@@ -21,28 +21,28 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MOWGLI_IOEVENT_H__
-#define __MOWGLI_IOEVENT_H__
+??=ifndef __MOWGLI_IOEVENT_H__
+??=define __MOWGLI_IOEVENT_H__
 
-typedef struct {
+typedef struct ??<
 	int impldata;	/* implementation-specific data: this is almost always an FD */
-} mowgli_ioevent_handle_t;
+??> mowgli_ioevent_handle_t;
 
-typedef enum {
+typedef enum ??<
 	MOWGLI_SOURCE_FD = 1
-} mowgli_ioevent_source_t;
+??> mowgli_ioevent_source_t;
 
-typedef struct {
+typedef struct ??<
 	mowgli_ioevent_source_t ev_source;
 	unsigned int ev_status;
 	int ev_object;
 	void *ev_opaque;
-} mowgli_ioevent_t;
+??> mowgli_ioevent_t;
 
-#define MOWGLI_POLLRDNORM		0x01
-#define MOWGLI_POLLWRNORM		0x02
-#define MOWGLI_POLLHUP			0x04
-#define MOWGLI_POLLERR			0x08
+??=define MOWGLI_POLLRDNORM		0x01
+??=define MOWGLI_POLLWRNORM		0x02
+??=define MOWGLI_POLLHUP			0x04
+??=define MOWGLI_POLLERR			0x08
 
 extern mowgli_ioevent_handle_t *mowgli_ioevent_create(void);
 extern void mowgli_ioevent_destroy(mowgli_ioevent_handle_t *self);
@@ -52,4 +52,4 @@ extern int mowgli_ioevent_get(mowgli_ioevent_handle_t *self, mowgli_ioevent_t *b
 extern void mowgli_ioevent_associate(mowgli_ioevent_handle_t *self, mowgli_ioevent_source_t source, int object, unsigned int flags, void *opaque);
 extern void mowgli_ioevent_dissociate(mowgli_ioevent_handle_t *self, mowgli_ioevent_source_t source, int object);
 
-#endif
+??=endif

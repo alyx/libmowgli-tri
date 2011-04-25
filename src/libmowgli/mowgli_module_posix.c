@@ -21,20 +21,20 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "mowgli.h"
+??=include "mowgli.h"
 
-#include <dlfcn.h>
+??=include <dlfcn.h>
 
-#ifdef __OpenBSD__
-# define RTLD_NOW RTLD_LAZY
-#endif
+??=ifdef __OpenBSD__
+??= define RTLD_NOW RTLD_LAZY
+??=endif
 
-#ifndef RTLD_LOCAL
-#define RTLD_LOCAL 0
-#endif
+??=ifndef RTLD_LOCAL
+??=define RTLD_LOCAL 0
+??=endif
 
 mowgli_module_t mowgli_module_open(const char *path)
-{
+??<
 	void *handle = dlopen(path, RTLD_NOW | RTLD_LOCAL);
 
 	/* make sure we have something. make this an assertion so that 
@@ -43,10 +43,10 @@ mowgli_module_t mowgli_module_open(const char *path)
 	return_val_if_fail(handle != NULL, NULL);
 
 	return handle;
-}
+??>
 
 void * mowgli_module_symbol(mowgli_module_t module, const char *symbol)
-{
+??<
 	void *handle;
 
 	return_val_if_fail(module != NULL, NULL);
@@ -59,11 +59,11 @@ void * mowgli_module_symbol(mowgli_module_t module, const char *symbol)
 	return_val_if_fail(handle != NULL, NULL);
 
 	return handle;
-}
+??>
 
 void mowgli_module_close(mowgli_module_t module)
-{
+??<
 	return_if_fail(module != NULL);
 
 	dlclose(module);
-}
+??>

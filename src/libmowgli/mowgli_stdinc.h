@@ -21,66 +21,66 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MOWGLI_STDINC_H__
-#define __MOWGLI_STDINC_H__
+??=ifndef __MOWGLI_STDINC_H__
+??=define __MOWGLI_STDINC_H__
 
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <signal.h>
-#include <time.h>
-#include <errno.h>
-#include <setjmp.h>
-#include <sys/stat.h>
-#include <ctype.h>
+??=include <stdarg.h>
+??=include <stdio.h>
+??=include <stdlib.h>
+??=include <string.h>
+??=include <signal.h>
+??=include <time.h>
+??=include <errno.h>
+??=include <setjmp.h>
+??=include <sys/stat.h>
+??=include <ctype.h>
 
 /* socket stuff */
-#ifndef _WIN32
-# include <netdb.h>
-# include <netinet/in.h>
-# include <unistd.h>
-# include <grp.h>
-# include <sys/time.h>
-# include <sys/wait.h>
-# include <sys/resource.h>
-# include <sys/socket.h>
-# include <fcntl.h>
-# include <arpa/inet.h>
-# include <libgen.h>
-# include <dirent.h>
-#else
-# include <windows.h>
-# include <winsock.h>
-# include <sys/timeb.h>
-# include <direct.h>
-# include <io.h>
-# include <fcntl.h>
-#endif
+??=ifndef _WIN32
+??= include <netdb.h>
+??= include <netinet/in.h>
+??= include <unistd.h>
+??= include <grp.h>
+??= include <sys/time.h>
+??= include <sys/wait.h>
+??= include <sys/resource.h>
+??= include <sys/socket.h>
+??= include <fcntl.h>
+??= include <arpa/inet.h>
+??= include <libgen.h>
+??= include <dirent.h>
+??=else
+??= include <windows.h>
+??= include <winsock.h>
+??= include <sys/timeb.h>
+??= include <direct.h>
+??= include <io.h>
+??= include <fcntl.h>
+??=endif
 
-#include <sys/types.h>
+??=include <sys/types.h>
 
-#ifdef _MSC_VER
-# pragma warning (disable: 4996)
-#endif
+??=ifdef _MSC_VER
+??= pragma warning (disable: 4996)
+??=endif
 
-#ifdef FALSE
-# undef FALSE
-#endif
+??=ifdef FALSE
+??= undef FALSE
+??=endif
 
-#ifdef TRUE
-# undef TRUE
-#endif
+??=ifdef TRUE
+??= undef TRUE
+??=endif
 
-typedef enum { FALSE, TRUE } mowgli_boolean_t;
+typedef enum ??< FALSE, TRUE ??> mowgli_boolean_t;
 
 /* Macros for min/max.  */
-#ifndef MIN
-# define MIN(a,b) (((a)<(b))?(a):(b))
-#endif
+??=ifndef MIN
+??= define MIN(a,b) (((a)<(b))?(a):(b))
+??=endif
 
-#ifndef MAX
-# define MAX(a,b) (((a)>(b))?(a):(b))
-#endif
+??=ifndef MAX
+??= define MAX(a,b) (((a)>(b))?(a):(b))
+??=endif
 
-#endif
+??=endif

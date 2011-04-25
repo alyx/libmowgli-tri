@@ -21,17 +21,17 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "mowgli.h"
+??=include "mowgli.h"
 
 void mowgli_log_cb_default(const char *buf)
-{
+??<
 	fprintf(stderr, "%s\n", buf);
-}
+??>
 
 static mowgli_log_cb_t mowgli_log_cb = mowgli_log_cb_default;
 
 void mowgli_log_real(const char *file, int line, const char *func, const char *fmt, ...)
-{
+??<
 	char buf[65535];
 	char snbuf[65535];
 	va_list va;
@@ -43,20 +43,20 @@ void mowgli_log_real(const char *file, int line, const char *func, const char *f
 	snprintf(buf, 65535, "(%s:%d) [%s]: %s", file, line, func, snbuf);
 
 	mowgli_log_cb(buf);
-}
+??>
 
 void mowgli_log_set_cb(mowgli_log_cb_t callback)
-{
+??<
 	return_if_fail(callback != NULL);
 
 	mowgli_log_cb = callback;
-}
+??>
 
 void mowgli_soft_assert_log(const char *asrt, const char *file, int line, const char *function)
-{
+??<
 	char buf[65535];
 
 	snprintf(buf, sizeof buf, "(%s:%d) [%s]: critical: Assertion '%s' failed.", file, line, function, asrt);
 
 	mowgli_log_cb(buf);
-}
+??>

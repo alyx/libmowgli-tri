@@ -32,8 +32,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MOWGLI_PATRICIA_H__
-#define __MOWGLI_PATRICIA_H__
+??=ifndef __MOWGLI_PATRICIA_H__
+??=define __MOWGLI_PATRICIA_H__
 
 struct mowgli_patricia_; /* defined in src/patricia.c */
 struct mowgli_patricia_elem_; /* defined in src/patricia.c */
@@ -45,18 +45,18 @@ typedef struct mowgli_patricia_elem_ mowgli_patricia_elem_t;
  * mowgli_patricia_iteration_state_t, private.
  */
 struct mowgli_patricia_iteration_state_
-{
+??<
 	mowgli_patricia_elem_t *cur, *next;
 	void *pspare[4];
 	int ispare[4];
-};
+??>;
 
 typedef struct mowgli_patricia_iteration_state_ mowgli_patricia_iteration_state_t;
 
 /*
  * this is a convenience macro for inlining iteration of dictionaries.
  */
-#define MOWGLI_PATRICIA_FOREACH(element, state, dict) for (mowgli_patricia_foreach_start((dict), (state)); (element = mowgli_patricia_foreach_cur((dict), (state))); mowgli_patricia_foreach_next((dict), (state)))
+??=define MOWGLI_PATRICIA_FOREACH(element, state, dict) for (mowgli_patricia_foreach_start((dict), (state)); (element = mowgli_patricia_foreach_cur((dict), (state))); mowgli_patricia_foreach_next((dict), (state)))
 
 /*
  * mowgli_patricia_create() creates a new patricia tree of the defined resolution.
@@ -64,7 +64,7 @@ typedef struct mowgli_patricia_iteration_state_ mowgli_patricia_iteration_state_
  */
 
 /* defined if this version of Mowgli allows canonize_cb to be NULL */
-#define MOWGLI_PATRICIA_ALLOWS_NULL_CANONIZE
+??=define MOWGLI_PATRICIA_ALLOWS_NULL_CANONIZE
 
 extern mowgli_patricia_t *mowgli_patricia_create(void (*canonize_cb)(char *key));
 
@@ -145,4 +145,4 @@ void *mowgli_patricia_elem_get_data(mowgli_patricia_elem_t *elem);
 unsigned int mowgli_patricia_size(mowgli_patricia_t *dict);
 void mowgli_patricia_stats(mowgli_patricia_t *dict, void (*cb)(const char *line, void *privdata), void *privdata);
 
-#endif
+??=endif

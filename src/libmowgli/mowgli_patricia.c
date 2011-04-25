@@ -32,7 +32,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "mowgli.h"
+??=include "mowgli.h"
 
 static mowgli_heap_t *leaf_heap = NULL;
 static mowgli_heap_t *node_heap = NULL;
@@ -54,32 +54,32 @@ static mowgli_heap_t *node_heap = NULL;
 union patricia_elem;
 
 struct mowgli_patricia_
-{
+??<
 	void (*canonize_cb)(char *key);
 	union patricia_elem *root;
 	unsigned int count;
 	char *id;
-};
+??>;
 
-#define POINTERS_PER_NODE 16
-#define NIBBLE_VAL(key, nibnum) (((key)[(nibnum) / 2] >> ((nibnum) & 1 ? 0 : 4)) & 0xF)
+??=define POINTERS_PER_NODE 16
+??=define NIBBLE_VAL(key, nibnum) (((key)[(nibnum) / 2] >> ((nibnum) & 1 ? 0 : 4)) & 0xF)
 
 struct patricia_node
-{
+??<
 	/* nibble to test (nibble NUM%2 of byte NUM/2) */
 	int nibnum;
 	/* branches of the tree */
 	union patricia_elem *down[POINTERS_PER_NODE];
 	union patricia_elem *parent;
 	char parent_val;
-};
+??>;
 
 /* mowgli_patricia_elem_ is the name used in mowgli_patricia.h.
  * patricia_leaf is the name historically used here. */
-#define patricia_leaf mowgli_patricia_elem_
+??=define patricia_leaf mowgli_patricia_elem_
 
 struct patricia_leaf
-{
+??<
 	/* -1 to indicate this is a leaf, not a node */
 	int nibnum;
 	/* data associated with the key */
@@ -88,20 +88,20 @@ struct patricia_leaf
 	char *key;
 	union patricia_elem *parent;
 	char parent_val;
-};
+??>;
 
 union patricia_elem
-{
+??<
 	int nibnum;
 	struct patricia_node node;
 	struct patricia_leaf leaf;
-};
+??>;
 
-#define IS_LEAF(elem) ((elem)->nibnum == -1)
+??=define IS_LEAF(elem) ((elem)->nibnum == -1)
 
 /* Preserve compatibility with the old mowgli_patricia.h */
-#define STATE_CUR(state) ((state)->pspare[0])
-#define STATE_NEXT(state) ((state)->pspare[1])
+??=define STATE_CUR(state) ((state)->pspare[0])
+??=define STATE_NEXT(state) ((state)->pspare[1])
 
 /*
  * first_leaf()
@@ -118,22 +118,22 @@ union patricia_elem
  *     - none
  */
 static union patricia_elem *first_leaf(union patricia_elem *delem)
-{
+??<
 	int val;
 
 	while (!IS_LEAF(delem))
-	{
+	??<
 		for (val = 0; val < POINTERS_PER_NODE; val++)
-		{
+		??<
 			if (delem->node.down[val] != NULL)
-			{
+			??<
 				delem = delem->node.down[val];
 				break;
-			}
-		}
-	}
+			??>
+		??>
+	??>
 	return delem;
-}
+??>
 
 /*
  * mowgli_patricia_create(void (*canonize_cb)(char *key))
@@ -153,7 +153,7 @@ static union patricia_elem *first_leaf(union patricia_elem *delem)
  *       the program will abort.
  */
 mowgli_patricia_t *mowgli_patricia_create(void (*canonize_cb)(char *key))
-{
+??<
 	mowgli_patricia_t *dtree = (mowgli_patricia_t *) mowgli_alloc(sizeof(mowgli_patricia_t));
 
 	dtree->canonize_cb = canonize_cb;
@@ -166,7 +166,7 @@ mowgli_patricia_t *mowgli_patricia_create(void (*canonize_cb)(char *key))
 	dtree->root = NULL;
 
 	return dtree;
-}
+??>
 
 /*
  * mowgli_patricia_create_named(const char *name,
@@ -189,7 +189,7 @@ mowgli_patricia_t *mowgli_patricia_create(void (*canonize_cb)(char *key))
  */
 mowgli_patricia_t *mowgli_patricia_create_named(const char *name,
 	void (*canonize_cb)(char *key))
-{
+??<
 	mowgli_patricia_t *dtree = (mowgli_patricia_t *) mowgli_alloc(sizeof(mowgli_patricia_t));
 
 	dtree->canonize_cb = canonize_cb;
@@ -203,7 +203,7 @@ mowgli_patricia_t *mowgli_patricia_create_named(const char *name,
 	dtree->root = NULL;
 
 	return dtree;
-}
+??>
 
 /*
  * mowgli_patricia_destroy(mowgli_patricia_t *dtree,
@@ -230,7 +230,7 @@ mowgli_patricia_t *mowgli_patricia_create_named(const char *name,
 void mowgli_patricia_destroy(mowgli_patricia_t *dtree,
 	void (*destroy_cb)(const char *key, void *data, void *privdata),
 	void *privdata)
-{
+??<
 	mowgli_patricia_iteration_state_t state;
 	union patricia_elem *delem;
 	void *entry;
@@ -238,16 +238,16 @@ void mowgli_patricia_destroy(mowgli_patricia_t *dtree,
 	return_if_fail(dtree != NULL);
 
 	MOWGLI_PATRICIA_FOREACH(entry, &state, dtree)
-	{
+	??<
 		delem = STATE_CUR(&state);
 		if (destroy_cb != NULL)
 			(*destroy_cb)(delem->leaf.key, delem->leaf.data,
 					privdata);
 		mowgli_patricia_delete(dtree, delem->leaf.key);
-	}
+	??>
 
 	mowgli_free(dtree);
-}
+??>
 
 /*
  * mowgli_patricia_foreach(mowgli_patricia_t *dtree,
@@ -270,7 +270,7 @@ void mowgli_patricia_destroy(mowgli_patricia_t *dtree,
 void mowgli_patricia_foreach(mowgli_patricia_t *dtree,
 	int (*foreach_cb)(const char *key, void *data, void *privdata),
 	void *privdata)
-{
+??<
 	union patricia_elem *delem, *next;
 	int val;
 
@@ -281,40 +281,40 @@ void mowgli_patricia_foreach(mowgli_patricia_t *dtree,
 		return;
 	/* Only one element in the tree */
 	if (IS_LEAF(delem))
-	{
+	??<
 		if (foreach_cb != NULL)
 			(*foreach_cb)(delem->leaf.key, delem->leaf.data, privdata);
 		return;
-	}
+	??>
 	val = 0;
 	do
-	{
+	??<
 		do
 			next = delem->node.down[val++];
 		while (next == NULL && val < POINTERS_PER_NODE);
 		if (next != NULL)
-		{
+		??<
 			if (IS_LEAF(next))
-			{
+			??<
 				if (foreach_cb != NULL)
 					(*foreach_cb)(next->leaf.key, next->leaf.data, privdata);
-			}
+			??>
 			else
-			{
+			??<
 				delem = next;
 				val = 0;
-			}
-		}
+			??>
+		??>
 		while (val >= POINTERS_PER_NODE)
-		{
+		??<
 			val = delem->node.parent_val;
 			delem = delem->node.parent;
 			if (delem == NULL)
 				break;
 			val++;
-		}
-	} while (delem != NULL);
-}
+		??>
+	??> while (delem != NULL);
+??>
 
 /*
  * mowgli_patricia_search(mowgli_patricia_t *dtree,
@@ -338,7 +338,7 @@ void mowgli_patricia_foreach(mowgli_patricia_t *dtree,
 void *mowgli_patricia_search(mowgli_patricia_t *dtree,
 	void *(*foreach_cb)(const char *key, void *data, void *privdata),
 	void *privdata)
-{
+??<
 	union patricia_elem *delem, *next;
 	int val;
 	void *ret = NULL;
@@ -350,43 +350,43 @@ void *mowgli_patricia_search(mowgli_patricia_t *dtree,
 		return NULL;
 	/* Only one element in the tree */
 	if (IS_LEAF(delem))
-	{
+	??<
 		if (foreach_cb != NULL)
 			return (*foreach_cb)(delem->leaf.key, delem->leaf.data, privdata);
 		return NULL;
-	}
+	??>
 	val = 0;
 	for (;;)
-	{
+	??<
 		do
 			next = delem->node.down[val++];
 		while (next == NULL && val < POINTERS_PER_NODE);
 		if (next != NULL)
-		{
+		??<
 			if (IS_LEAF(next))
-			{
+			??<
 				if (foreach_cb != NULL)
 					ret = (*foreach_cb)(next->leaf.key, next->leaf.data, privdata);
 				if (ret != NULL)
 					break;
-			}
+			??>
 			else
-			{
+			??<
 				delem = next;
 				val = 0;
-			}
-		}
+			??>
+		??>
 		while (val >= POINTERS_PER_NODE)
-		{
+		??<
 			val = delem->node.parent_val;
 			delem = delem->node.parent;
 			if (delem == NULL)
 				break;
 			val++;
-		}
-	}
+		??>
+	??>
 	return ret;
-}
+??>
 
 /*
  * mowgli_patricia_foreach_start(mowgli_patricia_t *dtree,
@@ -406,7 +406,7 @@ void *mowgli_patricia_search(mowgli_patricia_t *dtree,
  */
 void mowgli_patricia_foreach_start(mowgli_patricia_t *dtree,
 	mowgli_patricia_iteration_state_t *state)
-{
+??<
 	return_if_fail(dtree != NULL);
 	return_if_fail(state != NULL);
 
@@ -422,7 +422,7 @@ void mowgli_patricia_foreach_start(mowgli_patricia_t *dtree,
 	/* make STATE_CUR point to first item and STATE_NEXT point to
 	 * second item */
 	mowgli_patricia_foreach_next(dtree, state);
-}
+??>
 
 /*
  * mowgli_patricia_foreach_cur(mowgli_patricia_t *dtree,
@@ -443,13 +443,13 @@ void mowgli_patricia_foreach_start(mowgli_patricia_t *dtree,
  */
 void *mowgli_patricia_foreach_cur(mowgli_patricia_t *dtree,
 	mowgli_patricia_iteration_state_t *state)
-{
+??<
 	return_val_if_fail(dtree != NULL, NULL);
 	return_val_if_fail(state != NULL, NULL);
 
 	return STATE_CUR(state) != NULL ?
 		((struct patricia_leaf *)STATE_CUR(state))->data : NULL;
-}
+??>
 
 /*
  * mowgli_patricia_foreach_next(mowgli_patricia_t *dtree,
@@ -469,7 +469,7 @@ void *mowgli_patricia_foreach_cur(mowgli_patricia_t *dtree,
  */
 void mowgli_patricia_foreach_next(mowgli_patricia_t *dtree,
 	mowgli_patricia_iteration_state_t *state)
-{
+??<
 	struct patricia_leaf *leaf;
 	union patricia_elem *delem, *next;
 	int val;
@@ -478,10 +478,10 @@ void mowgli_patricia_foreach_next(mowgli_patricia_t *dtree,
 	return_if_fail(state != NULL);
 
 	if (STATE_CUR(state) == NULL)
-	{
+	??<
 		mowgli_log("mowgli_patricia_foreach_next(): called again after iteration finished on dtree<%p>", dtree);
 		return;
-	}
+	??>
 
 	STATE_CUR(state) = STATE_NEXT(state);
 
@@ -493,44 +493,44 @@ void mowgli_patricia_foreach_next(mowgli_patricia_t *dtree,
 	val = leaf->parent_val;
 
 	while (delem != NULL)
-	{
+	??<
 		do
 			next = delem->node.down[val++];
 		while (next == NULL && val < POINTERS_PER_NODE);
 		if (next != NULL)
-		{
+		??<
 			if (IS_LEAF(next))
-			{
+			??<
 				/* We will find the original leaf first. */
 				if (&next->leaf != leaf)
-				{
+				??<
 					if (strcmp(next->leaf.key, leaf->key) < 0)
-					{
+					??<
 						mowgli_log("mowgli_patricia_foreach_next(): iteration went backwards (libmowgli bug) on dtree<%p>", dtree);
 						STATE_NEXT(state) = NULL;
 						return;
-					}
+					??>
 					STATE_NEXT(state) = next;
 					return;
-				}
-			}
+				??>
+			??>
 			else
-			{
+			??<
 				delem = next;
 				val = 0;
-			}
-		}
+			??>
+		??>
 		while (val >= POINTERS_PER_NODE)
-		{
+		??<
 			val = delem->node.parent_val;
 			delem = delem->node.parent;
 			if (delem == NULL)
 				break;
 			val++;
-		}
-	}
+		??>
+	??>
 	STATE_NEXT(state) = NULL;
-}
+??>
 
 /*
  * mowgli_patricia_elem_find(mowgli_patricia_t *dtree, const char *key)
@@ -549,7 +549,7 @@ void mowgli_patricia_foreach_next(mowgli_patricia_t *dtree,
  *     - none
  */
 struct patricia_leaf *mowgli_patricia_elem_find(mowgli_patricia_t *dict, const char *key)
-{
+??<
 	char ckey_store[256];
 	char *ckey_buf = NULL;
 	const char *ckey;
@@ -564,30 +564,30 @@ struct patricia_leaf *mowgli_patricia_elem_find(mowgli_patricia_t *dict, const c
 	if (dict->canonize_cb == NULL)
 		ckey = key;
 	else
-	{
+	??<
 		if (keylen >= sizeof ckey_store)
-		{
+		??<
 			ckey_buf = strdup(key);
 			dict->canonize_cb(ckey_buf);
 			ckey = ckey_buf;
-		}
+		??>
 		else
-		{
+		??<
 			strcpy(ckey_store, key);
 			dict->canonize_cb(ckey_store);
 			ckey = ckey_store;
-		}
-	}
+		??>
+	??>
 
 	delem = dict->root;
 	while (delem != NULL && !IS_LEAF(delem))
-	{
+	??<
 		if (delem->nibnum / 2 < keylen)
 			val = NIBBLE_VAL(ckey, delem->nibnum);
 		else
 			val = 0;
 		delem = delem->node.down[val];
-	}
+	??>
 	/* Now, if the key is in the tree, delem contains it. */
 	if (delem != NULL && strcmp(delem->leaf.key, ckey))
 		delem = NULL;
@@ -596,7 +596,7 @@ struct patricia_leaf *mowgli_patricia_elem_find(mowgli_patricia_t *dict, const c
 		free(ckey_buf);
 
 	return &delem->leaf;
-}
+??>
 
 /*
  * mowgli_patricia_add(mowgli_patricia_t *dtree, const char *key, void *data)
@@ -616,7 +616,7 @@ struct patricia_leaf *mowgli_patricia_elem_find(mowgli_patricia_t *dict, const c
  *     - data is inserted into the DTree.
  */
 struct patricia_leaf *mowgli_patricia_elem_add(mowgli_patricia_t *dict, const char *key, void *data)
-{
+??<
 	char *ckey;
 	union patricia_elem *delem, *prev, *newnode;
 	union patricia_elem **place1;
@@ -630,10 +630,10 @@ struct patricia_leaf *mowgli_patricia_elem_add(mowgli_patricia_t *dict, const ch
 	keylen = strlen(key);
 	ckey = strdup(key);
 	if (ckey == NULL)
-	{
+	??<
 		mowgli_log("major WTF: ckey is NULL, not adding node.");
 		return NULL;
-	}
+	??>
 	if (dict->canonize_cb != NULL)
 		dict->canonize_cb(ckey);
 
@@ -641,30 +641,30 @@ struct patricia_leaf *mowgli_patricia_elem_add(mowgli_patricia_t *dict, const ch
 	val = POINTERS_PER_NODE + 2; /* trap value */
 	delem = dict->root;
 	while (delem != NULL && !IS_LEAF(delem))
-	{
+	??<
 		prev = delem;
 		if (delem->nibnum / 2 < keylen)
 			val = NIBBLE_VAL(ckey, delem->nibnum);
 		else
 			val = 0;
 		delem = delem->node.down[val];
-	}
+	??>
 	/* Now, if the key is in the tree, delem contains it. */
 	if (delem != NULL && !strcmp(delem->leaf.key, ckey))
-	{
+	??<
 		mowgli_log("Key is already in dict, ignoring duplicate");
 		free(ckey);
 		return NULL;
-	}
+	??>
 
 	if (delem == NULL && prev != NULL)
-	{
+	??<
 		/* Get a leaf to compare with. */
 		delem = first_leaf(prev);
-	}
+	??>
 
 	if (delem == NULL)
-	{
+	??<
 		soft_assert(prev == NULL);
 		soft_assert(dict->count == 0);
 		place1 = &dict->root;
@@ -676,19 +676,19 @@ struct patricia_leaf *mowgli_patricia_elem_add(mowgli_patricia_t *dict, const ch
 		(*place1)->leaf.parent_val = val;
 		dict->count++;
 		return &(*place1)->leaf;
-	}
+	??>
 
 	/* Find the first nibble where they differ. */
 	for (i = 0; NIBBLE_VAL(ckey, i) == NIBBLE_VAL(delem->leaf.key, i); i++)
 		;
 	/* Find where to insert the new node. */
 	while (prev != NULL && prev->nibnum > i)
-	{
+	??<
 		val = prev->node.parent_val;
 		prev = prev->node.parent;
-	}
+	??>
 	if (prev == NULL || prev->nibnum < i)
-	{
+	??<
 		/* Insert new node below prev */
 		newnode = mowgli_heap_alloc(node_heap);
 		newnode->nibnum = i;
@@ -697,43 +697,43 @@ struct patricia_leaf *mowgli_patricia_elem_add(mowgli_patricia_t *dict, const ch
 		for (j = 0; j < POINTERS_PER_NODE; j++)
 			newnode->node.down[j] = NULL;
 		if (prev == NULL)
-		{
+		??<
 			newnode->node.down[NIBBLE_VAL(delem->leaf.key, i)] = dict->root;
 			if (IS_LEAF(dict->root))
-			{
+			??<
 				dict->root->leaf.parent = newnode;
 				dict->root->leaf.parent_val = NIBBLE_VAL(delem->leaf.key, i);
-			}
+			??>
 			else
-			{
+			??<
 				soft_assert(dict->root->nibnum > i);
 				dict->root->node.parent = newnode;
 				dict->root->node.parent_val = NIBBLE_VAL(delem->leaf.key, i);
-			}
+			??>
 			dict->root = newnode;
-		}
+		??>
 		else
-		{
+		??<
 			newnode->node.down[NIBBLE_VAL(delem->leaf.key, i)] = prev->node.down[val];
 			if (IS_LEAF(prev->node.down[val]))
-			{
+			??<
 				prev->node.down[val]->leaf.parent = newnode;
 				prev->node.down[val]->leaf.parent_val = NIBBLE_VAL(delem->leaf.key, i);
-			}
+			??>
 			else
-			{
+			??<
 				prev->node.down[val]->node.parent = newnode;
 				prev->node.down[val]->node.parent_val = NIBBLE_VAL(delem->leaf.key, i);
-			}
+			??>
 			prev->node.down[val] = newnode;
-		}
-	}
+		??>
+	??>
 	else
-	{
+	??<
 		/* This nibble is already checked. */
 		soft_assert(prev->nibnum == i);
 		newnode = prev;
-	}
+	??>
 	val = NIBBLE_VAL(ckey, i);
 	place1 = &newnode->node.down[val];
 	soft_assert(*place1 == NULL);
@@ -745,12 +745,12 @@ struct patricia_leaf *mowgli_patricia_elem_add(mowgli_patricia_t *dict, const ch
 	(*place1)->leaf.parent_val = val;
 	dict->count++;
 	return &(*place1)->leaf;
-}
+??>
 
 mowgli_boolean_t mowgli_patricia_add(mowgli_patricia_t *dict, const char *key, void *data)
-{
+??<
 	return (mowgli_patricia_elem_add(dict, key, data) != NULL) ? TRUE : FALSE;
-}
+??>
 
 /*
  * mowgli_patricia_delete(mowgli_patricia_t *dtree, const char *key)
@@ -772,7 +772,7 @@ mowgli_boolean_t mowgli_patricia_add(mowgli_patricia_t *dict, const char *key, v
  *     - the returned data needs to be mowgli_freed/released manually!
  */
 void *mowgli_patricia_delete(mowgli_patricia_t *dict, const char *key)
-{
+??<
 	void *data;
 	struct patricia_leaf *leaf;
 
@@ -783,10 +783,10 @@ void *mowgli_patricia_delete(mowgli_patricia_t *dict, const char *key)
 	data = leaf->data;
 	mowgli_patricia_elem_delete(dict, leaf);
 	return data;
-}
+??>
 
 void mowgli_patricia_elem_delete(mowgli_patricia_t *dict, struct patricia_leaf *leaf)
-{
+??<
 	union patricia_elem *delem, *prev, *next;
 	int val, i, used;
 
@@ -799,7 +799,7 @@ void mowgli_patricia_elem_delete(mowgli_patricia_t *dict, struct patricia_leaf *
 	mowgli_heap_free(leaf_heap, delem);
 
 	if (prev != NULL)
-	{
+	??<
 		prev->node.down[val] = NULL;
 
 		/* Leaf is gone, now consider the node it was in. */
@@ -811,7 +811,7 @@ void mowgli_patricia_elem_delete(mowgli_patricia_t *dict, struct patricia_leaf *
 				used = used == -1 ? i : -2;
 		soft_assert(used == -2 || used >= 0);
 		if (used >= 0)
-		{
+		??<
 			/* Only one pointer in this node, remove it.
 			 * Replace the pointer that pointed to it by
 			 * the sole pointer in it.
@@ -828,21 +828,21 @@ void mowgli_patricia_elem_delete(mowgli_patricia_t *dict, struct patricia_leaf *
 			else
 				next->node.parent = prev, next->node.parent_val = val;
 			mowgli_heap_free(node_heap, delem);
-		}
-	}
+		??>
+	??>
 	else
-	{
+	??<
 		/* This was the last leaf. */
 		dict->root = NULL;
-	}
+	??>
 
 	dict->count--;
 	if (dict->count == 0)
-	{
+	??<
 		soft_assert(dict->root == NULL);
 		dict->root = NULL;
-	}
-}
+	??>
+??>
 
 /*
  * mowgli_patricia_retrieve(mowgli_patricia_t *dtree, const char *key)
@@ -861,29 +861,29 @@ void mowgli_patricia_elem_delete(mowgli_patricia_t *dict, struct patricia_leaf *
  *     - none
  */
 void *mowgli_patricia_retrieve(mowgli_patricia_t *dtree, const char *key)
-{
+??<
 	struct patricia_leaf *delem = mowgli_patricia_elem_find(dtree, key);
 
 	if (delem != NULL)
 		return delem->data;
 
 	return NULL;
-}
+??>
 
 const char *mowgli_patricia_elem_get_key(struct patricia_leaf *leaf)
-{
+??<
 	return leaf->key;
-}
+??>
 
 void mowgli_patricia_elem_set_data(struct patricia_leaf *leaf, void *data)
-{
+??<
 	leaf->data = data;
-}
+??>
 
 void *mowgli_patricia_elem_get_data(struct patricia_leaf *leaf)
-{
+??<
 	return leaf->data;
-}
+??>
 
 /*
  * mowgli_patricia_size(mowgli_patricia_t *dict)
@@ -900,17 +900,17 @@ void *mowgli_patricia_elem_get_data(struct patricia_leaf *leaf)
  *     - none
  */
 unsigned int mowgli_patricia_size(mowgli_patricia_t *dict)
-{
+??<
 	return_val_if_fail(dict != NULL, 0);
 
 	return dict->count;
-}
+??>
 
 /* returns the sum of the depths of the subtree rooted in delem at depth depth */
 /* there is no need for this to be recursive, but it is easier... */
 static int
 stats_recurse(union patricia_elem *delem, int depth, int *pmaxdepth)
-{
+??<
 	int result = 0;
 	int val;
 	union patricia_elem *next;
@@ -918,38 +918,38 @@ stats_recurse(union patricia_elem *delem, int depth, int *pmaxdepth)
 	if (depth > *pmaxdepth)
 		*pmaxdepth = depth;
 	if (depth == 0)
-	{
+	??<
 		if (IS_LEAF(delem))
-		{
+		??<
 			soft_assert(delem->leaf.parent == NULL);
-		}
+		??>
 		else
-		{
+		??<
 			soft_assert(delem->node.parent == NULL);
-		}
-	}
+		??>
+	??>
 	if (IS_LEAF(delem))
 		return depth;
 	for (val = 0; val < POINTERS_PER_NODE; val++)
-	{
+	??<
 		next = delem->node.down[val];
 		if (next == NULL)
 			continue;
 		result += stats_recurse(next, depth + 1, pmaxdepth);
 		if (IS_LEAF(next))
-		{
+		??<
 			soft_assert(next->leaf.parent == delem);
 			soft_assert(next->leaf.parent_val == val);
-		}
+		??>
 		else
-		{
+		??<
 			soft_assert(next->node.parent == delem);
 			soft_assert(next->node.parent_val == val);
 			soft_assert(next->node.nibnum > delem->node.nibnum);
-		}
-	}
+		??>
+	??>
 	return result;
-}
+??>
 
 /*
  * mowgli_patricia_stats(mowgli_patricia_t *dict, void (*cb)(const char *line, void *privdata), void *privdata)
@@ -968,7 +968,7 @@ stats_recurse(union patricia_elem *delem, int depth, int *pmaxdepth)
  *     - callback called with stats text
  */
 void mowgli_patricia_stats(mowgli_patricia_t *dict, void (*cb)(const char *line, void *privdata), void *privdata)
-{
+??<
 	char str[256];
 	int sum, maxdepth;
 
@@ -983,12 +983,12 @@ void mowgli_patricia_stats(mowgli_patricia_t *dict, void (*cb)(const char *line,
 	cb(str, privdata);
 	maxdepth = 0;
 	if (dict->count > 0)
-	{
+	??<
 		sum = stats_recurse(dict->root, 0, &maxdepth);
 		snprintf(str, sizeof str, "Depth sum %d Avg depth %d Max depth %d", sum, sum / dict->count, maxdepth);
-	}
+	??>
 	else
 		snprintf(str, sizeof str, "Depth sum 0 Avg depth 0 Max depth 0");
 	cb(str, privdata);
 	return;
-}
+??>

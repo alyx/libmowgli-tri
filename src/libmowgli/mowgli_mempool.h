@@ -21,8 +21,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MOWGLI_MEMPOOL_H__
-#define __MOWGLI_MEMPOOL_H__
+??=ifndef __MOWGLI_MEMPOOL_H__
+??=define __MOWGLI_MEMPOOL_H__
 
 typedef struct mowgli_mempool_t_ mowgli_mempool_t;
 
@@ -39,7 +39,7 @@ void mowgli_mempool_destroy(mowgli_mempool_t * pool);
 
 char * mowgli_mempool_strdup(mowgli_mempool_t * pool, char * src);
 
-#define mowgli_mempool_alloc_object(pool, obj) \
+??=define mowgli_mempool_alloc_object(pool, obj) \
 	mowgli_mempool_allocate(pool, sizeof(obj))
 
-#endif
+??=endif

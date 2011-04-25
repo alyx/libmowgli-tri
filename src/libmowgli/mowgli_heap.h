@@ -24,17 +24,17 @@
  * Legal note: code devised from claro.base.block module r288 (Pre MPL)
  */
 
-#ifndef __MOWGLI_HEAP_H__
-#define __MOWGLI_HEAP_H__
+??=ifndef __MOWGLI_HEAP_H__
+??=define __MOWGLI_HEAP_H__
 
 typedef struct mowgli_heap_ mowgli_heap_t;
 typedef struct mowgli_block_ mowgli_block_t;
 
 /* Flag for mowgli_heap_create */
-#define BH_DONTCARE 0
+??=define BH_DONTCARE 0
 
-#define BH_NOW 1
-#define BH_LAZY 0
+??=define BH_NOW 1
+??=define BH_LAZY 0
 
 /* Functions for heaps */
 extern mowgli_heap_t *mowgli_heap_create(size_t elem_size, size_t mowgli_heap_elems, unsigned int flags);
@@ -46,5 +46,5 @@ extern void mowgli_heap_destroy(mowgli_heap_t *heap);
 extern void *mowgli_heap_alloc(mowgli_heap_t *heap);
 extern void mowgli_heap_free(mowgli_heap_t *heap, void *data);
 
-#endif
+??=endif
 

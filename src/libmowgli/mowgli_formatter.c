@@ -21,10 +21,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "mowgli.h"
+??=include "mowgli.h"
 
 void mowgli_formatter_format_from_argstack(char *buf, size_t bufstr, const char *fmtstr, const char *descstr, mowgli_argstack_t *stack)
-{
+??<
 	size_t pos = 0;
 	char *i = buf;
 	const char *fiter = fmtstr;
@@ -36,14 +36,14 @@ void mowgli_formatter_format_from_argstack(char *buf, size_t bufstr, const char 
 	*i = '\0';
 
 	while (*fiter && pos <= bufstr)
-	{
+	??<
 		int arg;
 		mowgli_argstack_element_t *e;
 
 		pos = strlen(buf);
 
 		switch(*fiter)
-		{
+		??<
 		case '%':
 			fiter++;
 			arg = atoi(fiter);
@@ -52,14 +52,14 @@ void mowgli_formatter_format_from_argstack(char *buf, size_t bufstr, const char 
 			while (isdigit(*fiter)) fiter++;
 
 			if (e == NULL)
-			{
+			??<
 				arg = snprintf(i, bufstr - (i - buf), "(unknown)");
 				i += arg;
 				continue;
-			}
+			??>
 
 			switch(e->type)
-			{
+			??<
 			case MOWGLI_ARG_STRING:
 				arg = snprintf(i, bufstr - (i - buf), "%s", e->data.string);
 				i += arg;
@@ -79,21 +79,21 @@ void mowgli_formatter_format_from_argstack(char *buf, size_t bufstr, const char 
 			default:
 				mowgli_throw_exception(mowgli.formatter.unhandled_type_exception);
 				break;
-			}
+			??>
 
 			continue;
 			break;
 		default:
 			*i = *fiter;
-		}
+		??>
 
 		i++;
 		fiter++;
-	}
-}
+	??>
+??>
 
 void mowgli_formatter_format(char *buf, size_t bufstr, const char *fmtstr, const char *descstr, ...)
-{
+??<
 	va_list va;
 	mowgli_argstack_t *stack;
 
@@ -102,10 +102,10 @@ void mowgli_formatter_format(char *buf, size_t bufstr, const char *fmtstr, const
 	va_end(va);
 
 	mowgli_formatter_format_from_argstack(buf, bufstr, fmtstr, descstr, stack);
-}
+??>
 
 void mowgli_formatter_print(const char *fmtstr, const char *descstr, ...)
-{
+??<
 	va_list va;
 	char buf[65535];
 	mowgli_argstack_t *stack;
@@ -116,4 +116,4 @@ void mowgli_formatter_print(const char *fmtstr, const char *descstr, ...)
 
 	mowgli_formatter_format_from_argstack(buf, 65535, fmtstr, descstr, stack);
 	printf("%s", buf);
-}
+??>

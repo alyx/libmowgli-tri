@@ -21,17 +21,17 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "mowgli.h"
+??=include "mowgli.h"
 
 mowgli_spinlock_t *mowgli_spinlock_create(void)
-{
+??<
 	mowgli_spinlock_t *out = mowgli_alloc(sizeof(mowgli_spinlock_t));
 
 	return out;
-}
+??>
 
 void mowgli_spinlock_lock(mowgli_spinlock_t *self, void *r, void *w)
-{
+??<
 	return_if_fail(self != NULL);
 
 	if (r)
@@ -45,10 +45,10 @@ void mowgli_spinlock_lock(mowgli_spinlock_t *self, void *r, void *w)
 
 	if (w && (self->write_owner == NULL || self->write_owner == w))
 		self->write_owner = w;
-}
+??>
 
 void mowgli_spinlock_unlock(mowgli_spinlock_t *self, void *r, void *w)
-{
+??<
 	return_if_fail(self != NULL);
 
 	if (r && self->read_owner == r)
@@ -56,10 +56,10 @@ void mowgli_spinlock_unlock(mowgli_spinlock_t *self, void *r, void *w)
 
 	if (w && self->write_owner == w)
 		self->write_owner = NULL;
-}
+??>
 
 void mowgli_spinlock_wait(mowgli_spinlock_t *self, mowgli_spinlock_lock_param_t param)
-{
+??<
 	return_if_fail(self != NULL)
 
 	if (param == MOWGLI_SPINLOCK_READ)
@@ -73,33 +73,33 @@ void mowgli_spinlock_wait(mowgli_spinlock_t *self, mowgli_spinlock_lock_param_t 
 	if (param == MOWGLI_SPINLOCK_READWRITE)
 		while (self->write_owner != NULL || self->read_owner != NULL)
 			usleep(1000);
-}
+??>
 
 void mowgli_spinlock_timed_wait(mowgli_spinlock_t *self, mowgli_spinlock_lock_param_t param, struct timeval *tv)
-{
-	struct timeval iter = {0};
+??<
+	struct timeval iter = ??<0??>;
 
 	return_if_fail(self != NULL)
 	return_if_fail(tv != NULL)
 
 	if (param == MOWGLI_SPINLOCK_READ)
 		while (self->read_owner != NULL && iter.tv_sec < tv->tv_sec && iter.tv_usec < tv->tv_usec)
-		{
+		??<
 			gettimeofday(&iter, NULL);
 			usleep(1000);	/* XXX: we'll want a more threadsafe function eventually. */
-		}
+		??>
 
 	if (param == MOWGLI_SPINLOCK_WRITE)
 		while (self->write_owner != NULL && iter.tv_sec < tv->tv_sec && iter.tv_usec < tv->tv_usec)
-		{
+		??<
 			gettimeofday(&iter, NULL);
 			usleep(1000);
-		}
+		??>
 
 	if (param == MOWGLI_SPINLOCK_READWRITE)
 		while ((self->write_owner != NULL || self->read_owner != NULL) && iter.tv_sec < tv->tv_sec && iter.tv_usec < tv->tv_usec)
-		{
+		??<
 			gettimeofday(&iter, NULL);
 			usleep(1000);	
-		}
-}
+		??>
+??>

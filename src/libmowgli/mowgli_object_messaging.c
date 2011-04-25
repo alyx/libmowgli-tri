@@ -21,10 +21,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "mowgli.h"
+??=include "mowgli.h"
 
 void mowgli_object_class_message_handler_attach(mowgli_object_class_t *klass, mowgli_object_message_handler_t *sig)
-{
+??<
 	if (klass == NULL)
 		mowgli_throw_exception(mowgli.object_messaging.invalid_object_class_exception);
 
@@ -32,10 +32,10 @@ void mowgli_object_class_message_handler_attach(mowgli_object_class_t *klass, mo
 		mowgli_throw_exception(mowgli.object_messaging.invalid_signal_exception);
 
 	mowgli_node_add(sig, mowgli_node_create(), &klass->message_handlers);
-}
+??>
 
 void mowgli_object_class_message_handler_detach(mowgli_object_class_t *klass, mowgli_object_message_handler_t *sig)
-{
+??<
 	mowgli_node_t *n;
 
 	if (klass == NULL)
@@ -47,10 +47,10 @@ void mowgli_object_class_message_handler_detach(mowgli_object_class_t *klass, mo
 	n = mowgli_node_find(sig, &klass->message_handlers);
 	mowgli_node_delete(n, &klass->message_handlers);
 	mowgli_node_free(n);
-}
+??>
 
 void mowgli_object_message_handler_attach(mowgli_object_t *self, mowgli_object_message_handler_t *sig)
-{
+??<
 	if (self == NULL)
 		mowgli_throw_exception(mowgli.object_messaging.invalid_object_exception);
 
@@ -58,10 +58,10 @@ void mowgli_object_message_handler_attach(mowgli_object_t *self, mowgli_object_m
 		mowgli_throw_exception(mowgli.object_messaging.invalid_signal_exception);
 
 	mowgli_node_add(sig, mowgli_node_create(), &self->message_handlers);
-}
+??>
 
 void mowgli_object_message_handler_detach(mowgli_object_t *self, mowgli_object_message_handler_t *sig)
-{
+??<
 	mowgli_node_t *n;
 
 	if (self == NULL)
@@ -73,10 +73,10 @@ void mowgli_object_message_handler_detach(mowgli_object_t *self, mowgli_object_m
 	n = mowgli_node_find(sig, &self->message_handlers);
 	mowgli_node_delete(n, &self->message_handlers);
 	mowgli_node_free(n);
-}
+??>
 
 void mowgli_object_message_broadcast(mowgli_object_t *self, const char *name, ...)
-{
+??<
 	mowgli_argstack_t *stack;
 	mowgli_object_message_handler_t *sig = NULL;
 	mowgli_node_t *n;
@@ -90,29 +90,29 @@ void mowgli_object_message_broadcast(mowgli_object_t *self, const char *name, ..
 
 	/* try to find a signal to compile the argument stack from, we start with self::klass first. */
 	MOWGLI_LIST_FOREACH(n, self->klass->message_handlers.head)
-	{
+	??<
 		mowgli_object_message_handler_t *sig2 = (mowgli_object_message_handler_t *) n->data;
 
 		if (!strcasecmp(sig2->name, name))
-		{
+		??<
 			sig = sig2;
 			break;
-		}
-	}
+		??>
+	??>
 
 	if (sig == NULL)
-	{
+	??<
 		MOWGLI_LIST_FOREACH(n, self->klass->message_handlers.head)
-		{
+		??<
 			mowgli_object_message_handler_t *sig2 = (mowgli_object_message_handler_t *) n->data;
 
 			if (!strcasecmp(sig2->name, name))
-			{
+			??<
 				sig = sig2;
 				break;
-			}
-		}
-	}
+			??>
+		??>
+	??>
 
 	/* return if no signals found, else compile the argstack */
 	if (sig == NULL)
@@ -123,20 +123,20 @@ void mowgli_object_message_broadcast(mowgli_object_t *self, const char *name, ..
 	va_end(va);
 
 	MOWGLI_LIST_FOREACH(n, self->klass->message_handlers.head)
-	{
+	??<
 		sig = (mowgli_object_message_handler_t *) n->data;
 
 		if (!strcasecmp(sig->name, name) && sig->handler != NULL)
 			sig->handler(self, sig, stack);
-	}
+	??>
 
 	MOWGLI_LIST_FOREACH(n, self->message_handlers.head)
-	{
+	??<
 		sig = (mowgli_object_message_handler_t *) n->data;
 
 		if (!strcasecmp(sig->name, name) && sig->handler != NULL)
 			sig->handler(self, sig, stack);
-	}
+	??>
 
 	mowgli_object_unref(stack);
-}
+??>

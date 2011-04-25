@@ -21,22 +21,22 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "mowgli.h"
+??=include "mowgli.h"
 
-#ifdef _MSC_VER
-# define EPOCH_TIME_IN_MICROSECS	11644473600000000Ui64
-#else
-# define EPOCH_TIME_IN_MICROSECS	11644473600000000ULL
-#endif
+??=ifdef _MSC_VER
+??= define EPOCH_TIME_IN_MICROSECS	11644473600000000Ui64
+??=else
+??= define EPOCH_TIME_IN_MICROSECS	11644473600000000ULL
+??=endif
 
 int gettimeofday(struct timeval *tv, struct timezone *tz)
-{
+??<
 	FILETIME ft;
-	ULARGE_INTEGER tmpres = { 0 };
+	ULARGE_INTEGER tmpres = ??< 0 ??>;
 	static mowgli_boolean_t tz_init_done = FALSE;
 
 	if (tv != NULL)
-	{
+	??<
 		GetSystemTimeAsFileTime(&ft);
 
 		tmpres.u.HighPart = ft.dwHighDateTime;
@@ -46,19 +46,19 @@ int gettimeofday(struct timeval *tv, struct timezone *tz)
 		tmpres.QuadPart -= EPOCH_TIME_IN_MICROSECS;
 		tv->tv_sec = (long) (tmpres.QuadPart / 1000000UL);
 		tv->tv_usec = (long) (tmpres.QuadPart % 1000000UL);
-	}
+	??>
 
 	if (tz != NULL)
-	{
+	??<
 		if (!tz_init_done)
-		{
+		??<
 			_tzset();
 			tz_init_done = TRUE;
-		}
+		??>
 
 		tz->tz_minuteswest = _timezone / 60;
 		tz->tz_dsttime = _daylight;
-	}
+	??>
 
 	return 0;
-}
+??>

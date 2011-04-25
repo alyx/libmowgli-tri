@@ -21,14 +21,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _WIN32
+??=ifndef _WIN32
 
-#include "mowgli.h"
+??=include "mowgli.h"
 
 static mowgli_signal_handler_t
 mowgli_signal_install_handler_full(int signum, mowgli_signal_handler_t handler,
 			    int *sigtoblock, size_t sigtoblocksize)
-{
+??<
 	struct sigaction action, old_action;
 	size_t i;
 
@@ -41,13 +41,13 @@ mowgli_signal_install_handler_full(int signum, mowgli_signal_handler_t handler,
 		sigaddset(&action.sa_mask, sigtoblock[i]);
 
 	if (sigaction(signum, &action, &old_action) == -1)
-	{
+	??<
 		mowgli_log("Failed to install signal handler for signal %d", signum);
 		return NULL;
-	}
+	??>
 
 	return old_action.sa_handler;
-}
+??>
 
 /*
  * A version of signal(2) that works more reliably across different
@@ -58,8 +58,8 @@ mowgli_signal_install_handler_full(int signum, mowgli_signal_handler_t handler,
  */
 mowgli_signal_handler_t
 mowgli_signal_install_handler(int signum, mowgli_signal_handler_t handler)
-{
+??<
 	return mowgli_signal_install_handler_full(signum, handler, NULL, 0);
-}
+??>
 
-#endif
+??=endif

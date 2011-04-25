@@ -21,10 +21,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "mowgli.h"
+??=include "mowgli.h"
 
 void mowgli_object_metadata_associate(mowgli_object_t *self, const char *key, void *value)
-{
+??<
 	mowgli_object_metadata_entry_t *e = NULL;
 	mowgli_node_t *n;
 
@@ -35,28 +35,28 @@ void mowgli_object_metadata_associate(mowgli_object_t *self, const char *key, vo
 		mowgli_throw_exception(mowgli.null_pointer_exception);
 
 	MOWGLI_LIST_FOREACH(n, self->metadata.head)
-	{
+	??<
 		e = (mowgli_object_metadata_entry_t *) n->data;
 
 		if (!strcasecmp(e->name, key))
 			break;
-	}
+	??>
 
 	if (e != NULL)
-	{
+	??<
 		e->data = value;
 		return;
-	}
+	??>
 
 	e = mowgli_alloc(sizeof(mowgli_object_metadata_entry_t));
 	e->name = strdup(key);
 	e->data = value;
 
 	mowgli_node_add(e, mowgli_node_create(), &self->metadata);
-}
+??>
 
 void mowgli_object_metadata_dissociate(mowgli_object_t *self, const char *key)
-{
+??<
 	mowgli_object_metadata_entry_t *e;
 	mowgli_node_t *n, *tn;
 
@@ -67,22 +67,22 @@ void mowgli_object_metadata_dissociate(mowgli_object_t *self, const char *key)
 		mowgli_throw_exception(mowgli.null_pointer_exception);
 
 	MOWGLI_LIST_FOREACH_SAFE(n, tn, self->metadata.head)
-	{
+	??<
 		e = (mowgli_object_metadata_entry_t *) n->data;
 
 		if (!strcasecmp(e->name, key))
-		{
+		??<
 			mowgli_node_delete(n, &self->metadata);
 			mowgli_node_free(n);
 
 			mowgli_free(e->name);
 			mowgli_free(e);
-		}
-	}
-}
+		??>
+	??>
+??>
 
 void *mowgli_object_metadata_retrieve(mowgli_object_t *self, const char *key)
-{
+??<
 	mowgli_object_metadata_entry_t *e;
 	mowgli_node_t *n;
 
@@ -93,12 +93,12 @@ void *mowgli_object_metadata_retrieve(mowgli_object_t *self, const char *key)
 		mowgli_throw_exception_val(mowgli.null_pointer_exception, NULL);
 
 	MOWGLI_LIST_FOREACH(n, self->metadata.head)
-	{
+	??<
 		e = (mowgli_object_metadata_entry_t *) n->data;
 
 		if (!strcasecmp(e->name, key))
 			return e->data;
-	}
+	??>
 
 	return NULL;
-}
+??>

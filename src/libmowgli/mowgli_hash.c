@@ -21,14 +21,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "mowgli.h"
+??=include "mowgli.h"
 
-#define HASHINIT 0x811c9dc5
-#define HASHBITS 16
-#define HASHSIZE (1 << HASHBITS)  /* 2^16 = 65536 */
+??=define HASHINIT 0x811c9dc5
+??=define HASHBITS 16
+??=define HASHSIZE (1 << HASHBITS)  /* 2^16 = 65536 */
 
 int mowgli_fnv_hash_string(const char *p)
-{
+??<
 	static int htoast = 0;
         unsigned int hval = HASHINIT;
 
@@ -38,16 +38,16 @@ int mowgli_fnv_hash_string(const char *p)
         if (!p)
                 return (0);
         for (; *p != '\0'; ++p)
-        {
+        ??<
                 hval += (hval << 1) + (hval << 4) + (hval << 7) + (hval << 8) + (hval << 24);
                 hval ^= (tolower(*p) ^ htoast);
-        }
+        ??>
 
         return ((hval >> HASHBITS) ^ (hval & ((1 << HASHBITS) - 1)) % HASHSIZE);
-}
+??>
 
 int mowgli_fnv_hash(unsigned int *p)
-{
+??<
 	static int htoast = 0;
         unsigned int hval = HASHINIT;
 
@@ -57,10 +57,10 @@ int mowgli_fnv_hash(unsigned int *p)
         if (!p)
                 return (0);
         for (; *p != '\0'; ++p)
-        {
+        ??<
                 hval += (hval << 1) + (hval << 4) + (hval << 7) + (hval << 8) + (hval << 24);
                 hval ^= (tolower(*p) ^ htoast);
-        }
+        ??>
 
         return ((hval >> HASHBITS) ^ (hval & ((1 << HASHBITS) - 1)) % HASHSIZE);
-}
+??>

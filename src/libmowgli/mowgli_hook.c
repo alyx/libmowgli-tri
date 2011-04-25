@@ -22,36 +22,36 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "mowgli.h"
+??=include "mowgli.h"
 
 static mowgli_patricia_t *mowgli_hooks = NULL;
 static mowgli_heap_t *mowgli_hook_item_heap;
 
 static void _hook_key_canon(char *str)
-{
+??<
 	while (*str)
-	{
+	??<
 		*str = toupper(*str);
 		str++;
-	}
-}
+	??>
+??>
 
 void
 mowgli_hook_init(void)
-{
+??<
 	mowgli_hooks = mowgli_patricia_create(_hook_key_canon);
 	mowgli_hook_item_heap = mowgli_heap_create(sizeof(mowgli_hook_item_t), 64, BH_NOW);
-}
+??>
 
 static mowgli_hook_t *
 mowgli_hook_find(const char *name)
-{
+??<
 	return mowgli_patricia_retrieve(mowgli_hooks, name);
-}
+??>
 
 void
 mowgli_hook_register(const char *name)
-{
+??<
 	mowgli_hook_t *hook;
 
 	return_if_fail(name != NULL);
@@ -61,11 +61,11 @@ mowgli_hook_register(const char *name)
 	hook->name = strdup(name);
 
 	mowgli_patricia_add(mowgli_hooks, hook->name, hook);
-}
+??>
 
 int
 mowgli_hook_associate(const char *name, mowgli_hook_function_t func, void *user_data)
-{
+??<
 	mowgli_hook_t *hook;
 	mowgli_hook_item_t *hookitem;
 
@@ -75,10 +75,10 @@ mowgli_hook_associate(const char *name, mowgli_hook_function_t func, void *user_
 	hook = mowgli_hook_find(name);
 
 	if (hook == NULL)
-	{
+	??<
 		mowgli_hook_register(name);
 		hook = mowgli_hook_find(name);
-	}
+	??>
 
 	/* this *cant* happen */
 	return_val_if_fail(hook != NULL, -1);
@@ -90,11 +90,11 @@ mowgli_hook_associate(const char *name, mowgli_hook_function_t func, void *user_
 	mowgli_node_add(hookitem, &hookitem->node, &hook->items);
 
 	return 0;
-}
+??>
 
 int
 mowgli_hook_dissociate(const char *name, mowgli_hook_function_t func)
-{
+??<
 	mowgli_hook_t *hook;
 	mowgli_node_t *n, *tn;
 
@@ -107,24 +107,24 @@ mowgli_hook_dissociate(const char *name, mowgli_hook_function_t func)
 		return -1;
 
 	MOWGLI_LIST_FOREACH_SAFE(n, tn, hook->items.head)
-	{
+	??<
 		mowgli_hook_item_t *hookitem = n->data;
 
 		if (hookitem->func == func)
-		{
+		??<
 			mowgli_node_delete(&hookitem->node, &hook->items);
 			mowgli_heap_free(mowgli_hook_item_heap, hookitem);
 
 			return 0;
-	        }
-	}
+	        ??>
+	??>
 
 	return -1;
-}
+??>
 
 void
 mowgli_hook_call(const char *name, void *hook_data)
-{
+??<
 	mowgli_hook_t *hook;
 	mowgli_node_t *n;
 
@@ -136,11 +136,11 @@ mowgli_hook_call(const char *name, void *hook_data)
 		return;
 
 	MOWGLI_LIST_FOREACH(n, hook->items.head)
-	{
+	??<
 		mowgli_hook_item_t *hookitem = n->data;
 
 		return_if_fail(hookitem->func != NULL);
 
 		hookitem->func(hook_data, hookitem->user_data);
-	}
-}
+	??>
+??>

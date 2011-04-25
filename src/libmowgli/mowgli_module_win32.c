@@ -21,13 +21,13 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "mowgli.h"
+??=include "mowgli.h"
 
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+??=define WIN32_LEAN_AND_MEAN
+??=include <windows.h>
 
 mowgli_module_t mowgli_module_open(const char *path)
-{
+??<
 	HANDLE handle = LoadLibraryA(path);
 
 	/* make sure we have something. make this an assertion so that 
@@ -36,10 +36,10 @@ mowgli_module_t mowgli_module_open(const char *path)
 	return_val_if_fail(handle != NULL, NULL);
 
 	return (mowgli_module_t)handle;
-}
+??>
 
 void * mowgli_module_symbol(mowgli_module_t module, const char *symbol)
-{
+??<
 	void *handle;
 
 	return_val_if_fail(module != NULL, NULL);
@@ -52,11 +52,11 @@ void * mowgli_module_symbol(mowgli_module_t module, const char *symbol)
 	return_val_if_fail(handle != NULL, NULL);
 
 	return handle;
-}
+??>
 
 void mowgli_module_close(mowgli_module_t module)
-{
+??<
 	return_if_fail(module != NULL);
 
 	FreeLibrary((HANDLE)module);
-}
+??>

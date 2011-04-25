@@ -31,15 +31,15 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <mowgli.h>
+??=include <mowgli.h>
 
-#ifdef _WIN32
-#define strcasecmp			_stricmp
-#define snprintf			_snprintf
-#endif
+??=ifdef _WIN32
+??=define strcasecmp			_stricmp
+??=define snprintf			_snprintf
+??=endif
 
 int main(int argc, const char *argv[])
-{
+??<
 	mowgli_dictionary_t *test_dict;
 	mowgli_random_t *r;
 	char key[10];
@@ -52,28 +52,28 @@ int main(int argc, const char *argv[])
 	r = mowgli_random_create();
 
 	for (i = 0; i < 100; i++)
-	{
+	??<
 		ans[i] = mowgli_random_int(r);
 		snprintf(key, 10, "%ldkey%ld", i, i);
 		mowgli_dictionary_add(test_dict, key, (void *) ans[i]);
-	}
+	??>
 
 	for (i = 0; i < 100; i++)
-	{
+	??<
 		snprintf(key, 10, "%ldkey%ld", i, i);
 
 		if ( (long) mowgli_dictionary_retrieve(test_dict, key) != ans[i])
-		{
+		??<
 			printf("FAIL %ld %p[%p]\n", i, mowgli_dictionary_retrieve(test_dict, key), (void*) ans[i]);
 			fail++;
-		}
+		??>
 		else
-		{
+		??<
 			printf("PASS %ld %p[%p]\n", i, mowgli_dictionary_retrieve(test_dict, key), (void*) ans[i]);
 			pass++;
-		}
-	}
+		??>
+	??>
 
 	printf("%d tests failed, %d tests passed.\n", fail, pass);
 	return 0;
-}
+??>

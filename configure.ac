@@ -16,7 +16,7 @@ AC_PROG_INSTALL
 AC_PROG_MAKE_SET
 AC_ISC_POSIX
 
-test x"$GCC" = x"yes" && CFLAGS="$CFLAGS -pipe -Wall"
+test x"$GCC" = x"yes" && CFLAGS="$CFLAGS -pipe -Wall -trigraphs"
 
 # XXX workaround
 PACKAGE="libmowgli"

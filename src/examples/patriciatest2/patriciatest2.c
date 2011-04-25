@@ -31,24 +31,24 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <mowgli.h>
+??=include <mowgli.h>
 
-#define TESTSIZE 10000
+??=define TESTSIZE 10000
 
 int errors = 0;
 
 void str_canon(char *key)
-{
+??<
 	return;
-}
+??>
 
 void statscb(const char *line, void *data)
-{
-}
+??<
+??>
 
 /* assumes data is key */
 static void check_all_retrievable(mowgli_patricia_t *dtree)
-{
+??<
 	mowgli_patricia_iteration_state_t state;
 	void *elem, *elem2;
 	unsigned int n1 = 0, n2;
@@ -56,98 +56,98 @@ static void check_all_retrievable(mowgli_patricia_t *dtree)
 	mowgli_patricia_stats(dtree, statscb, NULL);
 	n2 = mowgli_patricia_size(dtree);
 	MOWGLI_PATRICIA_FOREACH(elem, &state, dtree)
-	{
+	??<
 		elem2 = mowgli_patricia_retrieve(dtree, (const char *)elem);
 		if (elem2 == NULL)
-		{
+		??<
 			errors++;
 			printf("failed to find element %s\n",
 					(const char *)elem);
-		}
+		??>
 		else if (strcmp(elem2, elem))
-		{
+		??<
 			printf("element %s != %s\n",
 					(const char *)elem,
 					(const char *)elem2);
 			errors++;
-		}
+		??>
 		n1++;
 		if (n1 > n2 * 2)
 			break;
-	}
+	??>
 	if (n1 != n2)
-	{
+	??<
 		errors++;
 		printf("number of iterated elements %u != size %u\n", n1, n2);
-	}
-}
+	??>
+??>
 
 void test_patricia(void)
-{
+??<
 	mowgli_patricia_t *dtree;
 	int i, j;
 	char buf[100], *strings[TESTSIZE];
 
 	srandom(12346);
 	for (i = 0; i < TESTSIZE; i++)
-	{
+	??<
 		for (j = 0; j < 40; j++)
 			buf[j] = 'a' + random() % 26;
 		buf[20 + random() % 20] = '\0';
 		strings[i] = strdup(buf);
-	}
+	??>
 
 	dtree = mowgli_patricia_create(str_canon);
 
 	for (i = 0; i < TESTSIZE; i++)
-	{
+	??<
 		mowgli_patricia_add(dtree, strings[i], strings[i]);
 		check_all_retrievable(dtree);
-	}
+	??>
 
 	check_all_retrievable(dtree);
 
 	for (i = 0; i < TESTSIZE / 2; i++)
-	{
+	??<
 		mowgli_patricia_delete(dtree, strings[i]);
 		if (mowgli_patricia_retrieve(dtree, strings[i]))
-		{
+		??<
 			printf("still retrievable after delete: %s\n",
 					strings[i]);
 			errors++;
-		}
+		??>
 		check_all_retrievable(dtree);
-	}
+	??>
 
 	for (i = 0; i < TESTSIZE / 2; i++)
-	{
+	??<
 		mowgli_patricia_add(dtree, strings[i], strings[i]);
 		check_all_retrievable(dtree);
-	}
+	??>
 
 	for (i = 0; i < TESTSIZE; i++)
-	{
+	??<
 		mowgli_patricia_delete(dtree, strings[i]);
 		if (mowgli_patricia_retrieve(dtree, strings[i]))
-		{
+		??<
 			printf("still retrievable after delete: %s\n",
 					strings[i]);
 			errors++;
-		}
+		??>
 		check_all_retrievable(dtree);
-	}
+	??>
 
 	mowgli_patricia_destroy(dtree, NULL, NULL);
 
 	for (i = 0; i < TESTSIZE; i++)
 		free(strings[i]);
-}
+??>
 
 int main(int argc, char *argv[])
-{
+??<
 	mowgli_init();
 
 	test_patricia();
 
 	return errors == 0 ? 0 : 1;
-}
+??>

@@ -31,10 +31,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <mowgli.h>
+??=include <mowgli.h>
 
 int main(int argc, char *argv[])
-{
+??<
 	char buf[65535];
 	mowgli_init();
 
@@ -43,4 +43,4 @@ int main(int argc, char *argv[])
 	puts(buf);
 
 	return 0;
-}
+??>

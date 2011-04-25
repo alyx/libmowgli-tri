@@ -31,23 +31,23 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <mowgli.h>
+??=include <mowgli.h>
 
 int errors = 0;
 
 void str_canon(char *key)
-{
+??<
 	return;
-}
+??>
 
 void statscb(const char *line, void *data)
-{
+??<
 	printf("%s\n", line);
-}
+??>
 
 /* assumes data is key */
 static void check_all_retrievable(mowgli_patricia_t *dtree)
-{
+??<
 	mowgli_patricia_iteration_state_t state;
 	void *elem, *elem2;
 	unsigned int n1 = 0, n2;
@@ -57,45 +57,45 @@ static void check_all_retrievable(mowgli_patricia_t *dtree)
 	fflush(stdout);
 	n2 = mowgli_patricia_size(dtree);
 	MOWGLI_PATRICIA_FOREACH(elem, &state, dtree)
-	{
+	??<
 		elem2 = mowgli_patricia_retrieve(dtree, (const char *)elem);
 		if (elem2 == NULL)
-		{
+		??<
 			errors++;
 			printf("failed to find element %s\n",
 					(const char *)elem);
-		}
+		??>
 		else if (strcmp(elem2, elem))
-		{
+		??<
 			printf("element %s != %s\n",
 					(const char *)elem,
 					(const char *)elem2);
 			errors++;
-		}
+		??>
 		else
 			printf(".");
 		fflush(stdout);
 		n1++;
 		if (n1 > n2 * 2)
 			break;
-	}
+	??>
 	if (n1 != n2)
-	{
+	??<
 		errors++;
 		printf("number of iterated elements %u != size %u\n", n1, n2);
-	}
+	??>
 	printf("\n");
 	fflush(stdout);
-}
+??>
 
 void test_patricia(void)
-{
+??<
 	mowgli_patricia_t *dtree;
 	mowgli_patricia_iteration_state_t state;
 	void *elem;
 
 	dtree = mowgli_patricia_create(str_canon);
-#define ADD(x) printf("Adding %s\n", x); mowgli_patricia_add(dtree, x, x); check_all_retrievable(dtree)
+??=define ADD(x) printf("Adding %s\n", x); mowgli_patricia_add(dtree, x, x); check_all_retrievable(dtree)
 	ADD("\1\1");
 	ADD("alias");
 	ADD("\377");
@@ -118,22 +118,22 @@ void test_patricia(void)
 	ADD("delete");
 
 	MOWGLI_PATRICIA_FOREACH(elem, &state, dtree)
-	{
+	??<
 		printf("element -> %s\n", (const char *)elem);
-	}
+	??>
 	printf("End of elements\n");
 	mowgli_patricia_stats(dtree, statscb, NULL);
 
 	check_all_retrievable(dtree);
 
-#define TESTRETRIEVE(x) elem = mowgli_patricia_retrieve(dtree, x); printf("element %s: %s\n", x, elem ? (errors++, "YES") : "NO")
+??=define TESTRETRIEVE(x) elem = mowgli_patricia_retrieve(dtree, x); printf("element %s: %s\n", x, elem ? (errors++, "YES") : "NO")
 	TESTRETRIEVE("meows");
 	TESTRETRIEVE("meo");
 	TESTRETRIEVE("deletes");
 	TESTRETRIEVE("z");
 	TESTRETRIEVE("0");
 
-#define TESTDELETE(x) mowgli_patricia_delete(dtree, x); elem = mowgli_patricia_retrieve(dtree, x); printf("deleting %s: %s\n", x, elem ? (errors++, "STILL PRESENT") : "GONE"); check_all_retrievable(dtree)
+??=define TESTDELETE(x) mowgli_patricia_delete(dtree, x); elem = mowgli_patricia_retrieve(dtree, x); printf("deleting %s: %s\n", x, elem ? (errors++, "STILL PRESENT") : "GONE"); check_all_retrievable(dtree)
 	TESTDELETE("YYY");
 	TESTDELETE("foo");
 	TESTDELETE("splork");
@@ -145,13 +145,13 @@ void test_patricia(void)
 	TESTDELETE("dog");
 
 	mowgli_patricia_destroy(dtree, NULL, NULL);
-}
+??>
 
 int main(int argc, char *argv[])
-{
+??<
 	mowgli_init();
 
 	test_patricia();
 
 	return errors == 0 ? 0 : 1;
-}
+??>

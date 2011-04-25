@@ -1,6 +1,6 @@
 include ../../extra.mk
 
-LIB = $??<LIB_PREFIX??>mowgli$??<LIB_SUFFIX??>
+LIB = ${LIB_PREFIX}mowgli${LIB_SUFFIX}
 LIB_MAJOR = 2
 LIB_MINOR = 0
 DISTCLEAN = mowgli_config.h
@@ -73,5 +73,5 @@ INCLUDES = mowgli.h			\
 
 include ../../buildsys.mk
 
-CPPFLAGS += $??<LIB_CPPFLAGS??> -I. -I.. -DMOWGLI_CORE
-CFLAGS += $??<LIB_CFLAGS??>
+CPPFLAGS += ${LIB_CPPFLAGS} -I. -I.. -DMOWGLI_CORE
+CFLAGS += ${LIB_CFLAGS}

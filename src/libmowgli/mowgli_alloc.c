@@ -21,7 +21,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "mowgli.h"
+??=include "mowgli.h"
 
 /*
  * bootstrapped allocators so that we can initialise without blowing up
@@ -29,22 +29,22 @@
 
 static void *
 _mowgli_bootstrap_alloc(int size)
-{
+??<
 	return calloc(size, 1);
-}
+??>
 
 static void
 _mowgli_bootstrap_free(void *ptr)
-{
+??<
 	if (ptr)
 		free(ptr);
-}
+??>
 
-static mowgli_allocation_policy_t _mowgli_allocator_bootstrap = {
-	{ 0 },
+static mowgli_allocation_policy_t _mowgli_allocator_bootstrap = ??<
+	??< 0 ??>,
 	_mowgli_bootstrap_alloc,
 	_mowgli_bootstrap_free
-};
+??>;
 
 static mowgli_allocation_policy_t *_mowgli_allocator = &_mowgli_allocator_bootstrap;
 
@@ -61,11 +61,11 @@ static mowgli_allocation_policy_t *_mowgli_allocator = &_mowgli_allocator_bootst
  */
 void *
 mowgli_alloc_array(size_t size, size_t count)
-{
+??<
 	return_val_if_fail(_mowgli_allocator != NULL, NULL);
 
 	return _mowgli_allocator->allocate(size * count);
-}
+??>
 
 /*
  * \brief Allocates an object of "size" size.
@@ -78,9 +78,9 @@ mowgli_alloc_array(size_t size, size_t count)
  */
 void *
 mowgli_alloc(size_t size)
-{
+??<
 	return mowgli_alloc_array(size, 1);
-}
+??>
 
 /*
  * \brief Frees an object back to the system memory pool.
@@ -91,12 +91,12 @@ mowgli_alloc(size_t size)
  */
 void
 mowgli_free(void *ptr)
-{
+??<
 	return_if_fail(_mowgli_allocator != NULL);
 	return_if_fail(ptr != NULL);
 
 	_mowgli_allocator->deallocate(ptr);
-}
+??>
 
 /*
  * \brief Sets the mowgli.allocation_policy used by the allocation primitives.
@@ -105,11 +105,11 @@ mowgli_free(void *ptr)
  */
 void
 mowgli_allocator_set_policy(mowgli_allocation_policy_t *policy)
-{
+??<
 	return_if_fail(policy != NULL);
 
 	_mowgli_allocator = policy;
-}
+??>
 
 /*
  * \brief Sets the mowgli.allocation_policy used by the allocation primitives,
@@ -119,7 +119,7 @@ mowgli_allocator_set_policy(mowgli_allocation_policy_t *policy)
  */
 void
 mowgli_allocator_set_policy_by_name(const char *name)
-{
+??<
 	mowgli_allocation_policy_t *policy;
 
 	return_if_fail(name != NULL);
@@ -130,4 +130,4 @@ mowgli_allocator_set_policy_by_name(const char *name)
 		return;
 
 	mowgli_allocator_set_policy(policy);
-}
+??>

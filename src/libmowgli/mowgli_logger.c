@@ -32,15 +32,15 @@ static mowgli_log_cb_t mowgli_log_cb = mowgli_log_cb_default;
 
 void mowgli_log_real(const char *file, int line, const char *func, const char *fmt, ...)
 ??<
-	char buf[65535];
-	char snbuf[65535];
+	char buf[65535??);
+	char snbuf[65535??);
 	va_list va;
 
 	va_start(va, fmt);
 	vsnprintf(snbuf, 65535, fmt, va);
 	va_end(va);
 
-	snprintf(buf, 65535, "(%s:%d) [%s]: %s", file, line, func, snbuf);
+	snprintf(buf, 65535, "(%s:%d) [%s??): %s", file, line, func, snbuf);
 
 	mowgli_log_cb(buf);
 ??>
@@ -54,9 +54,9 @@ void mowgli_log_set_cb(mowgli_log_cb_t callback)
 
 void mowgli_soft_assert_log(const char *asrt, const char *file, int line, const char *function)
 ??<
-	char buf[65535];
+	char buf[65535??);
 
-	snprintf(buf, sizeof buf, "(%s:%d) [%s]: critical: Assertion '%s' failed.", file, line, function, asrt);
+	snprintf(buf, sizeof buf, "(%s:%d) [%s??): critical: Assertion '%s' failed.", file, line, function, asrt);
 
 	mowgli_log_cb(buf);
 ??>

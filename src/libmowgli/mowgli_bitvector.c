@@ -198,8 +198,8 @@ mowgli_bitvector_t *mowgli_bitvector_xor(mowgli_bitvector_t *bv1, mowgli_bitvect
 
 	for (iter = 0; iter < bs; iter++)
 	??<
-		out->vector[iter??) = bv1->vector[iter??);
-		out->vector[iter??) &= ??-bv2->vector[iter??);
+		out->vector<:iter??) = bv1->vector<:iter??);
+		out->vector<:iter??) &= ??-bv2->vector<:iter??);
 	??>
 
 	return out;

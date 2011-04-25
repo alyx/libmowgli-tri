@@ -66,7 +66,7 @@ int mowgli_ioevent_get(mowgli_ioevent_handle_t *self, mowgli_ioevent_t *buf, siz
 ??=endif
 
 ??=ifdef HAVE_EPOLL_CTL
-	struct epoll_event events[bufsize];
+	struct epoll_event events[bufsize??);
 
 	ret = epoll_wait(self->impldata, events, bufsize, delay);
 
@@ -75,27 +75,27 @@ int mowgli_ioevent_get(mowgli_ioevent_handle_t *self, mowgli_ioevent_t *buf, siz
 
 	for (iter = 0; iter < ret; iter++)
 	??<
-		buf[iter].ev_status = 0;
-		buf[iter].ev_object = events[iter].data.fd;
-		buf[iter].ev_opaque = events[iter].data.ptr;
-		buf[iter].ev_source = MOWGLI_SOURCE_FD;
+		buf[iter??).ev_status = 0;
+		buf[iter??).ev_object = events[iter??).data.fd;
+		buf[iter??).ev_opaque = events[iter??).data.ptr;
+		buf[iter??).ev_source = MOWGLI_SOURCE_FD;
 
-		if (events[iter].events & EPOLLIN)
-			buf[iter].ev_status |= MOWGLI_POLLRDNORM;
+		if (events[iter??).events & EPOLLIN)
+			buf[iter??).ev_status |= MOWGLI_POLLRDNORM;
 
-		if (events[iter].events & EPOLLOUT)
-			buf[iter].ev_status |= MOWGLI_POLLWRNORM;
+		if (events[iter??).events & EPOLLOUT)
+			buf[iter??).ev_status |= MOWGLI_POLLWRNORM;
 
-		if (events[iter].events & EPOLLHUP)
-			buf[iter].ev_status = MOWGLI_POLLHUP;
+		if (events[iter??).events & EPOLLHUP)
+			buf[iter??).ev_status = MOWGLI_POLLHUP;
 
-		if (events[iter].events & EPOLLERR)
-			buf[iter].ev_status = MOWGLI_POLLERR;
+		if (events[iter??).events & EPOLLERR)
+			buf[iter??).ev_status = MOWGLI_POLLERR;
 	??>
 ??=endif
 
 ??=ifdef HAVE_PORT_CREATE
-	port_event_t events[bufsize];
+	port_event_t events[bufsize??);
 	unsigned int nget = 1;
 	struct timespec poll_time;
 
@@ -109,22 +109,22 @@ int mowgli_ioevent_get(mowgli_ioevent_handle_t *self, mowgli_ioevent_t *buf, siz
 
 	for (iter = 0; iter < nget; iter++)
 	??<
-		buf[iter].ev_status = 0;
-		buf[iter].ev_object = events[iter].portev_object;
-		buf[iter].ev_opaque = events[iter].portev_user;
-		buf[iter].ev_source = MOWGLI_SOURCE_FD;
+		buf[iter??).ev_status = 0;
+		buf[iter??).ev_object = events[iter??).portev_object;
+		buf[iter??).ev_opaque = events[iter??).portev_user;
+		buf[iter??).ev_source = MOWGLI_SOURCE_FD;
 
-		if (events[iter].portev_events & POLLRDNORM)
-			buf[iter].ev_status |= MOWGLI_POLLRDNORM;
+		if (events[iter??).portev_events & POLLRDNORM)
+			buf[iter??).ev_status |= MOWGLI_POLLRDNORM;
 
-		if (events[iter].portev_events & POLLWRNORM)
-			buf[iter].ev_status |= MOWGLI_POLLWRNORM;
+		if (events[iter??).portev_events & POLLWRNORM)
+			buf[iter??).ev_status |= MOWGLI_POLLWRNORM;
 
-		if (events[iter].portev_events & POLLHUP)
-			buf[iter].ev_status = MOWGLI_POLLHUP;
+		if (events[iter??).portev_events & POLLHUP)
+			buf[iter??).ev_status = MOWGLI_POLLHUP;
 
-		if (events[iter].portev_events & POLLERR)
-			buf[iter].ev_status = MOWGLI_POLLERR;
+		if (events[iter??).portev_events & POLLERR)
+			buf[iter??).ev_status = MOWGLI_POLLERR;
 	??>
 
 	ret = nget;

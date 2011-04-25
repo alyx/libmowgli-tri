@@ -107,7 +107,7 @@ void mowgli_formatter_format(char *buf, size_t bufstr, const char *fmtstr, const
 void mowgli_formatter_print(const char *fmtstr, const char *descstr, ...)
 ??<
 	va_list va;
-	char buf[65535];
+	char buf[65535??);
 	mowgli_argstack_t *stack;
 
 	va_start(va, descstr);

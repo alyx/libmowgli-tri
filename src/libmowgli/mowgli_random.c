@@ -35,7 +35,7 @@
 struct mowgli_random_
 ??<
 	mowgli_object_t object;
-	unsigned int mt[N];
+	unsigned int mt[N??);
 	size_t mti;
 ??>;
 
@@ -68,11 +68,11 @@ void mowgli_random_reseed(mowgli_random_t *self, unsigned int seed)
 ??<
 	return_if_fail(self != NULL);
 
-	self->mt[0] = seed & 0xffffffffUL;
+	self->mt[0??) = seed & 0xffffffffUL;
 	for (self->mti = 1; self->mti < N; self->mti++)
 	??<
-		self->mt[self->mti] = (1812433253UL * (self->mt[self->mti - 1] ^ (self->mt[self->mti - 1] >> 30)) + self->mti);
-		self->mt[self->mti] &= 0xffffffffUL;
+		self->mt[self->mti??) = (1812433253UL * (self->mt[self->mti - 1??) ^ (self->mt[self->mti - 1??) >> 30)) + self->mti);
+		self->mt[self->mti??) &= 0xffffffffUL;
 	??>
 ??>
 
@@ -80,7 +80,7 @@ void mowgli_random_reseed(mowgli_random_t *self, unsigned int seed)
 unsigned int mowgli_random_int(mowgli_random_t *self)
 ??<
 	unsigned int y;
-	static unsigned int mag01[2] = ??< 0x0UL, MATRIX_A ??>;
+	static unsigned int mag01[2??) = ??< 0x0UL, MATRIX_A ??>;
 
 	return_val_if_fail(self != NULL, 0);
 
@@ -90,22 +90,22 @@ unsigned int mowgli_random_int(mowgli_random_t *self)
 
 		for (t = 0; t < N - M; t++)
 		??<
-			y = (self->mt[t] & UPPER_MASK) | (self->mt[t + 1] & LOWER_MASK);
-			self->mt[t] = self->mt[t + M] ^ (y >> 1) ^ mag01[y & 0x1U];
+			y = (self->mt[t??) & UPPER_MASK) | (self->mt[t + 1??) & LOWER_MASK);
+			self->mt[t??) = self->mt[t + M??) ^ (y >> 1) ^ mag01[y & 0x1U??);
 		??>
 
 		for (; t < N - 1; t++)
 		??<
-			y = (self->mt[t] & UPPER_MASK) | (self->mt[t + 1] & LOWER_MASK);
-			self->mt[t] = self->mt[t + (M - N)] ^ (y >> 1) ^ mag01[y & 0x1U];			
+			y = (self->mt[t??) & UPPER_MASK) | (self->mt[t + 1??) & LOWER_MASK);
+			self->mt[t??) = self->mt[t + (M - N)??) ^ (y >> 1) ^ mag01[y & 0x1U??);			
 		??>
 
-		y = (self->mt[N - 1] & UPPER_MASK) | (self->mt[0] & LOWER_MASK);
-		self->mt[N - 1] = self->mt[M - 1] ^ (y >> 1) ^ mag01[y & 0x1U];
+		y = (self->mt[N - 1??) & UPPER_MASK) | (self->mt[0??) & LOWER_MASK);
+		self->mt[N - 1??) = self->mt[M - 1??) ^ (y >> 1) ^ mag01[y & 0x1U??);
 		self->mti = 0;
 	??>
 
-	y = self->mt[self->mti++];
+	y = self->mt[self->mti++??);
 
 	/* tempering */
 	y ^= (y >> 11);

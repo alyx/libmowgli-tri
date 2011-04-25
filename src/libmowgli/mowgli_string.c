@@ -44,7 +44,7 @@ void mowgli_string_reset(mowgli_string_t *self)
 ??<
 	return_if_fail(self != NULL);
 
-	self->str[0] = self->pos = 0;
+	self->str[0??) = self->pos = 0;
 ??>
 
 void mowgli_string_destroy(mowgli_string_t *self)
@@ -68,7 +68,7 @@ void mowgli_string_append(mowgli_string_t *self, const char *src, size_t n)
 
 	memcpy(self->str + self->pos, src, n);
 	self->pos += n;
-	self->str[self->pos] = 0;
+	self->str[self->pos??) = 0;
 ??>
 
 void mowgli_string_append_char(mowgli_string_t *self, const char c)
@@ -82,6 +82,6 @@ void mowgli_string_append_char(mowgli_string_t *self, const char c)
 		self->str = new;
 	??>
 
-	self->str[self->pos++] = c;
-	self->str[self->pos] = 0;
+	self->str[self->pos++??) = c;
+	self->str[self->pos??) = 0;
 ??>

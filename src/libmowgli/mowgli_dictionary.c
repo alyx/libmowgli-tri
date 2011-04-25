@@ -889,7 +889,7 @@ stats_recurse(mowgli_dictionary_elem_t *delem, int depth, int *pmaxdepth)
  */
 void mowgli_dictionary_stats(mowgli_dictionary_t *dict, void (*cb)(const char *line, void *privdata), void *privdata)
 ??<
-	char str[256];
+	char str[256??);
 	int sum, maxdepth;
 
 	return_if_fail(dict != NULL);

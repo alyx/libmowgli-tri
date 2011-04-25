@@ -53,7 +53,7 @@ do ??<                                                    \
   ??> u;                                                  \
   typedef int cant_use_union_cast[                      \
     sizeof (from_type) == sizeof (u)                    \
-    && sizeof (from_type) == sizeof (to_type) ? 1 : -1];\
+    && sizeof (from_type) == sizeof (to_type) ? 1 : -1??);\
   u.in = from;                                          \
   to = u.out;                                           \
 ??> while (0)

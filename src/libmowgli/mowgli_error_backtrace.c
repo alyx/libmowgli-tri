@@ -79,7 +79,7 @@ mowgli_error_context_display_with_error(mowgli_error_context_t *e, const char *d
 void
 mowgli_error_context_push(mowgli_error_context_t *e, const char *msg, ...)
 ??<
-	char buf[65535];
+	char buf[65535??);
 	va_list va;
 
 	return_if_fail(e != NULL);

@@ -38,7 +38,7 @@ mowgli_signal_install_handler_full(int signum, mowgli_signal_handler_t handler,
 	sigemptyset(&action.sa_mask);
 
 	for (i = 0; i < sigtoblocksize; i++)
-		sigaddset(&action.sa_mask, sigtoblock[i]);
+		sigaddset(&action.sa_mask, sigtoblock[i??));
 
 	if (sigaction(signum, &action, &old_action) == -1)
 	??<

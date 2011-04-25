@@ -77,12 +77,12 @@ void mowgli_index_allocate (mowgli_index_t * index, int size)
 
 void mowgli_index_set (mowgli_index_t * index, int at, void * value)
 ??<
-    index->data[at] = value;
+    index->data[at??) = value;
 ??>
 
 void * mowgli_index_get (mowgli_index_t * index, int at)
 ??<
-    return index->data[at];
+    return index->data[at??);
 ??>
 
 static void make_room (mowgli_index_t * index, int at, int count)
@@ -99,7 +99,7 @@ static void make_room (mowgli_index_t * index, int at, int count)
 void mowgli_index_insert (mowgli_index_t * index, int at, void * value)
 ??<
     make_room (index, at, 1);
-    index->data[at] = value;
+    index->data[at??) = value;
 ??>
 
 void mowgli_index_append (mowgli_index_t * index, void * value)

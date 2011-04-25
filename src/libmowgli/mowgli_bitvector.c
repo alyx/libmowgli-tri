@@ -93,11 +93,11 @@ void mowgli_bitvector_set(mowgli_bitvector_t *bv, int slot, mowgli_boolean_t val
 	switch(val)
 	??<
 		case FALSE:
-			bv->vector[bv->bits / bv->divisor] &= ~value;
+			bv->vector[bv->bits / bv->divisor??) &= ??-value;
 			break;
 		default:
 		case TRUE:
-			bv->vector[bv->bits / bv->divisor] |= value;
+			bv->vector[bv->bits / bv->divisor??) |= value;
 			break;
 	??>
 ??>
@@ -122,7 +122,7 @@ mowgli_boolean_t mowgli_bitvector_get(mowgli_bitvector_t *bv, int slot)
 ??<
 	int mask = 1 << slot;
 
-	return ((bv->vector[bv->bits / bv->divisor] & mask) != 0) ? TRUE : FALSE;
+	return ((bv->vector[bv->bits / bv->divisor??) & mask) != 0) ? TRUE : FALSE;
 ??>
 
 /*
@@ -158,8 +158,8 @@ mowgli_bitvector_t *mowgli_bitvector_combine(mowgli_bitvector_t *bv1, mowgli_bit
 
 	for (iter = 0; iter < bs; iter++)
 	??<
-		out->vector[iter] |= bv1->vector[iter];
-		out->vector[iter] |= bv2->vector[iter];
+		out->vector[iter??) |= bv1->vector[iter??);
+		out->vector[iter??) |= bv2->vector[iter??);
 	??>
 
 	return out;
@@ -198,8 +198,8 @@ mowgli_bitvector_t *mowgli_bitvector_xor(mowgli_bitvector_t *bv1, mowgli_bitvect
 
 	for (iter = 0; iter < bs; iter++)
 	??<
-		out->vector[iter] = bv1->vector[iter];
-		out->vector[iter] &= ~bv2->vector[iter];
+		out->vector[iter??) = bv1->vector[iter??);
+		out->vector[iter??) &= ??-bv2->vector[iter??);
 	??>
 
 	return out;
@@ -230,7 +230,7 @@ mowgli_boolean_t mowgli_bitvector_compare(mowgli_bitvector_t *bv1, mowgli_bitvec
 
 	for (iter = 0; iter < bs; iter++)
 	??<
-		if (!(bv1->vector[iter] & bv2->vector[iter]))
+		if (!(bv1->vector[iter??) & bv2->vector[iter??)))
 			ret = FALSE;
 	??>
 

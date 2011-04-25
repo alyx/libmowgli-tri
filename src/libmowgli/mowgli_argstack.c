@@ -21,7 +21,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "mowgli.h"
+??=include "mowgli.h"
 
 static mowgli_object_class_t klass;
 
@@ -31,20 +31,20 @@ static mowgli_object_class_t klass;
  * \param vptr pointer to mowgli_argstack_t to destroy.
  */
 static void mowgli_argstack_destroy(void *vptr)
-{
+??<
 	mowgli_argstack_t *self = (mowgli_argstack_t *) vptr;
 	mowgli_node_t *n, *tn;
 
 	MOWGLI_LIST_FOREACH_SAFE(n, tn, self->stack.head)
-	{
+	??<
 		mowgli_free(n->data);
 
 		mowgli_node_delete(n, &self->stack);
 		mowgli_node_free(n);
-	}
+	??>
 
 	mowgli_free(self);
-}
+??>
 
 /*
  * \brief Initialization code for the mowgli.argstack library.
@@ -53,9 +53,9 @@ static void mowgli_argstack_destroy(void *vptr)
  *       - the mowgli_argstack_t object class is registered.
  */
 void mowgli_argstack_init(void)
-{
+??<
 	mowgli_object_class_init(&klass, "mowgli_argstack_t", mowgli_argstack_destroy, FALSE);
-}
+??>
 
 /*
  * \brief Creates an argument stack from a va_list and an appropriate 
@@ -71,7 +71,7 @@ void mowgli_argstack_init(void)
  * \return a mowgli_argstack_t (mowgli.argstack) object.
  */
 mowgli_argstack_t *mowgli_argstack_create_from_va_list(const char *descstr, va_list va)
-{
+??<
 	const char *cp = descstr;
 	mowgli_argstack_t *out = mowgli_alloc(sizeof(mowgli_argstack_t));
 	mowgli_object_init(mowgli_object(out), descstr, &klass, NULL);
@@ -80,11 +80,11 @@ mowgli_argstack_t *mowgli_argstack_create_from_va_list(const char *descstr, va_l
 		mowgli_throw_exception_val(mowgli.argstack.invalid_description, NULL);
 
 	while (*cp)
-	{
+	??<
 		mowgli_argstack_element_t *e = mowgli_alloc(sizeof(mowgli_argstack_element_t));
 
 		switch(*cp)
-		{
+		??<
 		case 's':
 			e->data.string = va_arg(va, char *);
 			e->type = MOWGLI_ARG_STRING;
@@ -106,14 +106,14 @@ mowgli_argstack_t *mowgli_argstack_create_from_va_list(const char *descstr, va_l
 			mowgli_object_unref(out);
 			mowgli_throw_exception_val(mowgli.argstack.invalid_description, NULL);
 			break;
-		}
+		??>
 
 		mowgli_node_add(e, mowgli_node_create(), &out->stack);
 		cp++;
-	}
+	??>
 
 	return out;
-}
+??>
 
 /*
  * \brief Creates an argument stack.
@@ -128,7 +128,7 @@ mowgli_argstack_t *mowgli_argstack_create_from_va_list(const char *descstr, va_l
  * \return a mowgli_argstack_t (mowgli.argstack) object.
  */
 mowgli_argstack_t *mowgli_argstack_create(const char *descstr, ...)
-{
+??<
 	va_list va;
 	mowgli_argstack_t *out;
 
@@ -140,7 +140,7 @@ mowgli_argstack_t *mowgli_argstack_create(const char *descstr, ...)
 	va_end(va);
 
 	return out;
-}
+??>
 
 /*
  * \brief Convenience function to pop a string value off of an argument stack.
@@ -153,7 +153,7 @@ mowgli_argstack_t *mowgli_argstack_create(const char *descstr, ...)
  *       - the argument is removed from the argstack.
  */
 const char *mowgli_argstack_pop_string(mowgli_argstack_t *self)
-{
+??<
 	mowgli_node_t *n;
 	mowgli_argstack_element_t *e;
 
@@ -166,7 +166,7 @@ const char *mowgli_argstack_pop_string(mowgli_argstack_t *self)
 	mowgli_node_free(n);
 
 	return e->data.string;
-}
+??>
 
 /*
  * \brief Convenience function to pop a numeric value off of an argument stack.
@@ -179,7 +179,7 @@ const char *mowgli_argstack_pop_string(mowgli_argstack_t *self)
  *       - the argument is removed from the argstack.
  */
 int mowgli_argstack_pop_numeric(mowgli_argstack_t *self)
-{
+??<
 	mowgli_node_t *n;
 	mowgli_argstack_element_t *e;
 
@@ -192,7 +192,7 @@ int mowgli_argstack_pop_numeric(mowgli_argstack_t *self)
 	mowgli_node_free(n);
 
 	return e->data.numeric;
-}
+??>
 
 /*
  * Convenience function to pop a boolean value off of an argument stack.
@@ -205,7 +205,7 @@ int mowgli_argstack_pop_numeric(mowgli_argstack_t *self)
  *       - the argument is removed from the argstack.
  */
 mowgli_boolean_t mowgli_argstack_pop_boolean(mowgli_argstack_t *self)
-{
+??<
 	mowgli_node_t *n;
 	mowgli_argstack_element_t *e;
 
@@ -218,7 +218,7 @@ mowgli_boolean_t mowgli_argstack_pop_boolean(mowgli_argstack_t *self)
 	mowgli_node_free(n);
 
 	return e->data.boolean;
-}
+??>
 
 /*
  * \brief Convenience function to pop a pointer value off of an argument stack.
@@ -231,7 +231,7 @@ mowgli_boolean_t mowgli_argstack_pop_boolean(mowgli_argstack_t *self)
  *       - the argument is removed from the argstack.
  */
 void *mowgli_argstack_pop_pointer(mowgli_argstack_t *self)
-{
+??<
 	mowgli_node_t *n;
 	mowgli_argstack_element_t *e;
 
@@ -244,4 +244,4 @@ void *mowgli_argstack_pop_pointer(mowgli_argstack_t *self)
 	mowgli_node_free(n);
 
 	return e->data.pointer;
-}
+??>

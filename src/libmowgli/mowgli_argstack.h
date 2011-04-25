@@ -21,30 +21,30 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MOWGLI_ARGSTACK_H__
-#define __MOWGLI_ARGSTACK_H__
+??=ifndef __MOWGLI_ARGSTACK_H__
+??=define __MOWGLI_ARGSTACK_H__
 
-typedef enum {
+typedef enum ??<
 	MOWGLI_ARG_NUMERIC,
 	MOWGLI_ARG_POINTER,
 	MOWGLI_ARG_STRING,
 	MOWGLI_ARG_BOOLEAN
-} mowgli_argstack_element_type_t;
+??> mowgli_argstack_element_type_t;
 
-typedef struct {
-	union {
+typedef struct ??<
+	union ??<
 		int numeric;
 		void *pointer;
 		char *string;
 		mowgli_boolean_t boolean;
-	} data;
+	??> data;
 	mowgli_argstack_element_type_t type;
-} mowgli_argstack_element_t;
+??> mowgli_argstack_element_t;
 
-typedef struct {
+typedef struct ??<
 	mowgli_object_t parent;
 	mowgli_list_t stack;
-} mowgli_argstack_t;
+??> mowgli_argstack_t;
 
 extern mowgli_argstack_t *mowgli_argstack_create(const char *descstr, ...);
 extern mowgli_argstack_t *mowgli_argstack_create_from_va_list(const char *descstr, va_list va);
@@ -54,4 +54,4 @@ extern int mowgli_argstack_pop_numeric(mowgli_argstack_t *);
 extern mowgli_boolean_t mowgli_argstack_pop_boolean(mowgli_argstack_t *);
 extern void *mowgli_argstack_pop_pointer(mowgli_argstack_t *);
 
-#endif
+??=endif

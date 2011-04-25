@@ -21,17 +21,17 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MOWGLI_ALLOCATION_POLICY_H__
-#define __MOWGLI_ALLOCATION_POLICY_H__
+??=ifndef __MOWGLI_ALLOCATION_POLICY_H__
+??=define __MOWGLI_ALLOCATION_POLICY_H__
 
 typedef void *(*mowgli_allocation_func_t)(int size);
 typedef void (*mowgli_deallocation_func_t)(void *ptr);
 
-typedef struct {
+typedef struct ??<
 	mowgli_object_t parent;
 	mowgli_allocation_func_t allocate;
 	mowgli_deallocation_func_t deallocate;
-} mowgli_allocation_policy_t;
+??> mowgli_allocation_policy_t;
 
 void mowgli_allocation_policy_init(void);
 mowgli_allocation_policy_t *mowgli_allocation_policy_create(const char *name,

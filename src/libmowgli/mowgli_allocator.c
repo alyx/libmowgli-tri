@@ -21,26 +21,26 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "mowgli.h"
+??=include "mowgli.h"
 
 mowgli_allocation_policy_t *mowgli_allocator_malloc = NULL;
 
 static void *
 mowgli_allocator_func_malloc(int size)
-{
+??<
 	return calloc(size, 1);
-}
+??>
 
 static void
 mowgli_allocator_func_free(void *ptr)
-{
+??<
 	if (ptr)
 		free(ptr);
-}
+??>
 
 void
 mowgli_allocator_init(void)
-{
+??<
 	mowgli_allocator_malloc = mowgli_allocation_policy_create("malloc", mowgli_allocator_func_malloc, 
 		mowgli_allocator_func_free);
-}
+??>
